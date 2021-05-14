@@ -1,0 +1,343 @@
+/*codigo de usuario*/
+package com.mycompany.p2ed.ReglasGram.datos;
+import com.mycompany.p2ed.ReglasGram.Token;
+import java_cup.runtime.*;
+import com.mycompany.p2ed.ReglasGram.datos.symDatos.*;
+import java.util.ArrayList;
+import java.util.List;
+import com.mycompany.p2ed.objetos.*;
+import com.mycompany.p2ed.listas.*;
+import com.mycompany.p2ed.hash.*;
+import com.mycompany.p2ed.Tree.*;
+
+parser code {:
+	
+	private List<String> listaErrores;
+	//listas de los objetos
+	private ListCircularDoble<Usuario> listUsuarios = new ListCircularDoble<>();
+	private ListCircularDoble<Edificio> listEdificios = new ListCircularDoble<>();
+	private ListCircularDoble<Curso> listCurso = new ListCircularDoble<Curso>();
+	private ListSimple <Salon> listSalones = new ListSimple<>();
+	private Hash<Estudiante> listEstudiantes = new Hash<>();
+	private AVL<Catedratico> listCadedraticos = new AVL<>();
+	private TreeB<Horario> listHorario = new TreeB<>(5);
+	private ListDoble<Asignar> listAsignacion = new ListDoble<>();
+
+	/*
+		lista Circular doblemente enlazada: usuarios, edificios, cursos
+		lista simple: salones
+		hash: estudiante
+		AVL: catedraticos
+		tree B: horario
+		lista doblemente enlazada: asignar
+	*/
+
+	public ParserDatos(LexerDatos lex){
+		super(lex);
+		listaErrores = new ArrayList<String>();
+	}
+	public void syntax_error(Symbol cur_token){
+			String nombreSimbolo = symbl_name_from_id(cur_token.sym);
+            Token token = (Token) cur_token.value;
+            addError(token,"No se esperaba");			
+	}
+
+	public void report_fatal_error(String message, Object info){
+			String Elerror = "Error Irrecuperable: " + message + " -> {objeto: " + info + "}";
+			listaErrores.add(Elerror);	
+	}
+
+	private void addError(Token token, String description){
+		String msgError =  "Error: ( "+ token.getLexema() +" ) -> {Linea: "+token.getLinea()+", Columna: "+ token.getColumna() +" }," ;
+		msgError += description;
+		listaErrores.add(msgError);
+	}
+
+
+	protected int error_sync_size(){
+		return 1;
+	}
+
+	public ListCircularDoble getUsuarios(){
+		return listUsuarios;
+	}
+	public ListCircularDoble getCursos(){
+		return listCurso;
+	}
+	public ListCircularDoble getEdificios(){
+		return listEdificios;
+	}
+	public ListSimple getSalones(){
+		return listSalones;
+	}
+	public Hash getEstudiantes(){
+		return listEstudiantes;
+	}
+	public AVL getCatedraticos(){
+		return listCadedraticos;
+	}
+	public TreeB getHorario(){
+		return listHorario;
+	}
+	public ListDoble getAsignaciones(){
+		return listAsignacion;
+	}
+	public List getListErrores(){
+		return listaErrores;
+	}
+
+:}
+
+/*terminales*/
+terminal Token ESTUDIANTE,USUARIO,CATEDRATICO,EDIFICIO,SALON,CURSO,HORARIO,ASIGNAR,COLABORADOR;
+terminal Token STRING,CADENA,PAI,PAD,NUMERO,COMA,SEMI;
+terminal Token INVALID;
+
+/*no terminales*/
+non terminal Token inicio,tipo_entrada,tipos_string,tipos_string_ws_error,numero,fin_instrucion,estudiante;
+non terminal Token parametros_estudiante,apertura_param,cerradura_param,cont_estudiante;
+non terminal Token usuario,catedratico,edificio,salon,curso,horario,asginar;
+non terminal Token parametros_user,cont_user,tipo_usr;
+non terminal Token parametros_catedratico,cont_catedratico,parametros_edificio,cont_edificio;
+non terminal Token parametro_salon,cont_salon,parametros_curso,cont_curso;
+non terminal Token parametros_horario,cont_horario,parametros_asginar,cont_asignar;
+
+/*precedencia*/
+
+/*gramatica*/
+start with inicio;
+
+inicio ::= inicio tipo_entrada
+			|tipo_entrada
+			;
+tipo_entrada ::= estudiante
+				|usuario
+				|catedratico
+				|edificio
+				|salon
+				|curso
+				|horario
+				|asginar
+				|error
+				;
+
+tipos_string ::= STRING:e {:RESULT = e;:}
+				|CADENA:e {:RESULT = e;:}
+				|error
+				;
+tipos_string_ws_error ::= STRING:e {:RESULT = e;:}
+						|CADENA:e {:RESULT = e;:}
+						;
+
+numero ::= NUMERO:e {:RESULT = e;:}
+			|error
+			;
+fin_instrucion ::= SEMI
+					|error
+					;
+
+estudiante ::= ESTUDIANTE parametros_estudiante fin_instrucion
+				;
+
+parametros_estudiante ::= apertura_param cont_estudiante cerradura_param
+						;
+apertura_param ::= PAI
+					|error
+					;
+cerradura_param ::= PAD	
+					|error
+					;
+cont_estudiante ::= NUMERO:carnet COMA tipos_string:nombre COMA tipos_string:direccion
+						{:
+							int Carnet = Integer.parseInt(carnet.getLexema());
+							String Nombre = nombre.getLexema();
+							String Direccion = direccion.getLexema();
+							Estudiante estud = listEstudiantes.get(Carnet);
+							if(estud == null){
+								estud = new Estudiante(Carnet,Nombre,Direccion);
+								listEstudiantes.push(Carnet,estud);
+							}else{
+								addError(carnet,"El id esta repetido");
+							}
+						:}
+					|error
+					;
+usuario ::= USUARIO parametros_user fin_instrucion	
+			;
+parametros_user ::= apertura_param cont_user cerradura_param
+					;
+cont_user ::= NUMERO:id COMA tipos_string:nombre COMA tipos_string:password COMA tipo_usr:tipo
+					{:
+						int ID = Integer.valueOf(id.getLexema());
+						String Nombre = nombre.getLexema();
+						String pass = password.getLexema();
+						String Tipo = tipo.getLexema();
+						Usuario user = new Usuario(ID,Nombre,pass,Tipo);
+						if(Tipo.equalsIgnoreCase("estudiante")){
+							Estudiante estud = listEstudiantes.get(ID);
+							if(estud ==  null){
+								addError(id," No exite el estudiante con el carnet: " + id.getLexema());
+							}else{
+								user.setEstudiante(estud);
+								listUsuarios.push(id.getLexema(),user);
+							}
+						}else{
+							listUsuarios.push(id.getLexema(),user);
+						}
+
+							
+					:}
+
+				|error
+				;
+tipo_usr ::= COLABORADOR:e {:RESULT = e;:}
+			|ESTUDIANTE:e {:RESULT = e;:}
+			|error
+			;
+
+catedratico ::= CATEDRATICO parametros_catedratico fin_instrucion
+				;
+parametros_catedratico ::= apertura_param cont_catedratico cerradura_param
+							;
+cont_catedratico ::= NUMERO:identificador COMA tipos_string:nombre COMA tipos_string:direccion
+							{:
+								int id = Integer.parseInt(identificador.getLexema());
+								String Nombre = nombre.getLexema();
+								String Direccion = direccion.getLexema();
+								Catedratico cat = listCadedraticos.get(String.valueOf(id));
+								if (cat == null){
+									cat = new Catedratico(id,Nombre,Direccion);
+									listCadedraticos.add(String.valueOf(id),cat);
+								}else{
+									addError(identificador,"El id esta repetido");
+								}
+							:}
+					|error
+					;
+
+edificio ::= EDIFICIO parametros_edificio fin_instrucion
+			;
+parametros_edificio ::= apertura_param cont_edificio cerradura_param
+						;
+cont_edificio ::= tipos_string:nombre
+						{:
+							Edificio edificio =  listEdificios.get(nombre.getLexema());
+							if (edificio == null){
+								edificio = new Edificio(nombre.getLexema());
+								listEdificios.push(nombre.getLexema(),edificio);
+							}else{
+								addError(nombre,"El nombre del edificio esta repetido");
+							}
+						:}
+					;	
+
+salon ::= SALON parametro_salon fin_instrucion
+			;
+parametro_salon ::= apertura_param cont_salon cerradura_param
+					;
+cont_salon ::= tipos_string_ws_error:nombreSalon COMA numero:number COMA numero:capacidad
+					{:
+						String nombreEdificio =  nombreSalon.getLexema();
+						int Numero = Integer.parseInt(number.getLexema());
+						int Capacidad = Integer.parseInt(capacidad.getLexema());
+						Edificio edi = listEdificios.get(nombreEdificio);
+						if(edi == null){
+							addError(nombreSalon,"El Edifcion ingresado no existe");
+						} else{
+							Salon salon = new Salon(edi,Numero,Capacidad);
+							boolean bol = edi.getSalones().push(Numero,salon);
+							//boolean bol = listSalones.push(Numero,salon);
+							if(bol==false){
+								addError(number,"Ya exite un salon con ese numero");
+							}
+						}
+					:}
+				|error
+				;
+
+curso ::= CURSO parametros_curso fin_instrucion
+			;
+parametros_curso ::= apertura_param cont_curso cerradura_param
+					;
+cont_curso ::= NUMERO:codigo COMA tipos_string:nombre COMA numero:semestre COMA numero:creditos
+					{:
+						int Codigo = Integer.valueOf(codigo.getLexema());
+						String Nombre = nombre.getLexema();
+						int Semestre = Integer.valueOf(semestre.getLexema());
+						int Creditos = Integer.valueOf(creditos.getLexema());
+						Curso curso = listCurso.get(codigo.getLexema());
+						if (curso == null) {	
+							curso = new Curso(Codigo,Nombre,Semestre,Creditos);
+							listCurso.push(codigo.getLexema(),curso);
+						}else{
+							addError(codigo,"El id ya exite");
+						}
+					:}
+			|error
+			;
+
+horario ::= HORARIO parametros_horario fin_instrucion
+			;
+parametros_horario ::= apertura_param cont_horario cerradura_param
+						;
+cont_horario ::= NUMERO:codigo COMA tipos_string:periodo COMA tipos_string:dia COMA numero:codCurso COMA numero:codSalon COMA tipos_string:codEdificio COMA numero:numId
+					{:
+						int Codigo = Integer.valueOf(codigo.getLexema());
+						String Periodo =  periodo.getLexema();
+						String Dia = dia.getLexema();
+						int CodCurso  = Integer.valueOf(codCurso.getLexema());//curso
+						int CodSalon = Integer.valueOf(codSalon.getLexema());//salon
+						String CodEdificio = codEdificio.getLexema();//Edificio
+						int NumId = Integer.valueOf(numId.getLexema());//Catedratico
+
+						Curso curso = listCurso.get(String.valueOf(CodCurso));
+						Edificio edificio =  listEdificios.get(CodEdificio);
+						Catedratico catedratico =  listCadedraticos.get(String.valueOf(NumId));
+						if(curso == null){
+							addError(codCurso,"El curso no existe");
+						}else if(edificio == null){
+							addError(codEdificio,"El edificio no existe");
+						}else if(catedratico == null){
+							addError(numId,"El catedratico no existe");
+						}else{
+							Salon salon = (Salon) edificio.getSalones().get(CodSalon);
+							 if(salon == null){
+								addError(codSalon,"El salon no existe en el edificio");
+							}else{
+								Horario horario = new Horario(Codigo,Periodo,Dia,curso,salon,edificio,catedratico);
+								listHorario.Insert(Codigo,horario);
+							}
+						}
+						;
+					:}
+				|error
+				;
+
+asginar ::= ASIGNAR parametros_asginar fin_instrucion
+			;
+parametros_asginar ::= apertura_param cont_asignar cerradura_param
+						;
+cont_asignar ::= NUMERO:carnet COMA numero:codHorario COMA numero:zona COMA numero:ex_final
+						{:
+							int Carnet = Integer.valueOf(carnet.getLexema());//Estudiante
+							int CodHorario = Integer.valueOf(codHorario.getLexema());//Horario
+							int Zona = Integer.valueOf(zona.getLexema());
+							int Ex_final = Integer.valueOf(ex_final.getLexema());
+							Estudiante estud = listEstudiantes.get(Carnet);
+							Horario horario = listHorario.get(CodHorario);
+							if (estud == null) {
+								addError(carnet,"El estudiante no existe");
+							}else if(horario == null){
+								addError(codHorario,"El Horario no existe");
+							}else{
+								Asignar asginar =  listAsignacion.get(Carnet,CodHorario);
+								if(asginar == null){
+									asginar = new Asignar(estud,horario,Zona,Ex_final);
+									listAsignacion.push(Carnet,CodHorario,asginar);
+								}else{
+									addError(carnet,"Ya exite una asginacion en el horario y el estudiante");
+								}
+							}
+						:}
+				|error
+				;

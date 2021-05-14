@@ -1,0 +1,18 @@
+digraph g{subgraph cluster_user{
+style=filled;
+style=filled;
+color=white;
+node [shape=box,color=black];
+user_1->user_2[constraint=false];
+user_1[label="1\nlasecre\ncontra123\ncolaborador"];
+user_2->user_200145785[constraint=false];
+user_2[label="2\ncontrol123\ncontra1234\ncolaborador"];
+user_200145785->user_200745781[constraint=false];
+user_200145785[label="200145785\nFMarroquín\nfffmmm\nestudiante"];
+user_200745781->user_1[constraint=false];
+user_200745781[label="200745781\nUlises\nuliuli\nestudiante"];
+user_1->user_200745781[constraint=false];
+user_2->user_1[constraint=false];
+user_200145785->user_2[constraint=false];
+user_200745781->user_200145785[constraint=false];
+} }
