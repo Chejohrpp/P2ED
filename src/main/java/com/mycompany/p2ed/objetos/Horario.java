@@ -20,11 +20,11 @@ public class Horario {
     private String dia;
     private NodeCD<Curso> curso;
     private NodoS<Salon> salon;
-    private Edificio edificio;
+    private NodeCD<Edificio> edificio;
     private Catedratico catedratico;
     private ListDoble<Asignar> asignaciones;
 
-    public Horario(int id, String periodo, String dia, NodeCD curso, NodoS salon, Edificio edificio, Catedratico catedratico) {
+    public Horario(int id, String periodo, String dia, NodeCD curso, NodoS salon, NodeCD edificio, Catedratico catedratico) {
         this.id = id;
         this.periodo = periodo;
         this.dia = dia;
@@ -75,11 +75,11 @@ public class Horario {
         this.salon = salon;
     }
 
-    public Edificio getEdificio() {
+    public NodeCD getEdificio() {
         return edificio;
     }
 
-    public void setEdificio(Edificio edificio) {
+    public void setEdificio(NodeCD edificio) {
         this.edificio = edificio;
     }
 
@@ -108,13 +108,15 @@ public class Horario {
         }else{
             estado += "Curso: null"+"\\n";
         }
-        if (salon.getData() != null) {
+        if (salon.getData() != null && edificio.getData() != null) {
             estado += "Salon: "+salon.getData().getNumeroSalon()+"\\n";
         }else{
             estado += "Salon: null"+"\\n";
         }
-        if(edificio != null){
-            estado += "Edificio: "+edificio.getNombre()+"\\n";
+        if(edificio.getData() != null){
+            estado += "Edificio: "+edificio.getData().getNombre()+"\\n";
+        }else{
+            estado += "Edificio: null"+"\\n";
         }
         if (catedratico != null) {
             estado += "Catedratico: "+catedratico.getId()+"\\n";

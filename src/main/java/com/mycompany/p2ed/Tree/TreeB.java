@@ -443,8 +443,9 @@ public class TreeB<T> {
             Horario horario = (Horario)  x.key[i].data;            
             if (horario.getSalon().getData() != null) {
                 Salon salon = (Salon) horario.getSalon().getData();
-                if (salon.getEdificio() != null) {
-                    String edificio =  horario.getEdificio().getNombre();
+                if (horario.getEdificio().getData() != null) {
+                    Edificio edi = (Edificio) horario.getEdificio().getData();
+                    String edificio =  edi.getNombre();
                     flechas +=  actual+":T"+i +" -> salon_edificio_"+edificio + salon.getNumeroSalon()+"[color=green];\n";
                 }                
             }

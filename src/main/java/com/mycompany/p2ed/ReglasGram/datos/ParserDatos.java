@@ -1047,7 +1047,7 @@ class CUP$ParserDatos$actions {
 						int NumId = Integer.valueOf(numId.getLexema());//Catedratico
 
 						NodeCD curso = listCurso.getNode(String.valueOf(CodCurso));
-						Edificio edificio =  listEdificios.get(CodEdificio);
+						NodeCD<Edificio> edificio =  listEdificios.getNode(CodEdificio);
 						Catedratico catedratico =  listCadedraticos.get(String.valueOf(NumId));
 						if(curso == null){
 							addError(codCurso,"El curso no existe");
@@ -1056,7 +1056,7 @@ class CUP$ParserDatos$actions {
 						}else if(catedratico == null){
 							addError(numId,"El catedratico no existe");
 						}else{
-							NodoS salon = edificio.getSalones().getNodo(CodSalon);
+							NodoS salon = edificio.getData().getSalones().getNodo(CodSalon);
 							 if(salon == null){
 								addError(codSalon,"El salon no existe en el edificio");
 							}else{

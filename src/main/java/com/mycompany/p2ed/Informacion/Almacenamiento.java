@@ -42,7 +42,7 @@ public class Almacenamiento {
     
     
     public Almacenamiento(){
-        //No se pueden eliminar: horario,catedraticos,edificios
+        //No se pueden eliminar: horario,(posiblemente)catedraticos,edificios
     }
     
     public void cargarDatos(BufferedReader texto){
