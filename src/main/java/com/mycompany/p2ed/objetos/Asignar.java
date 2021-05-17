@@ -5,6 +5,9 @@
  */
 package com.mycompany.p2ed.objetos;
 
+import com.mycompany.p2ed.Nodos.NodeHash;
+import com.mycompany.p2ed.hash.Hash;
+
 /**
  *
  * @author sergi
@@ -12,6 +15,7 @@ package com.mycompany.p2ed.objetos;
 public class Asignar {
     
     private Estudiante estudiante;
+    private NodeHash<Estudiante> estudiante1;
     private Horario horario;
     private int zona;
     private int ex_final;
@@ -54,9 +58,21 @@ public class Asignar {
         this.ex_final = ex_final;
     }
 
+    public NodeHash getEstudiante1() {
+        return estudiante1;
+    }
+
+    public void setEstudiante1(NodeHash estudiante1) {
+        this.estudiante1 = estudiante1;
+    }
+    
     @Override
     public String toString() {
-        return "\\n"+ zona + "\\n" + ex_final;
+        if (estudiante1.getData() != null) {
+            return estudiante1.getData().getCarnet()+ "\\nZona: "+ zona + "\\nFinal: " + ex_final;
+        }else{
+            return "null"+ "\\nZona: "+ zona + "\\nFinal: " + ex_final;
+        }        
     }
     
     

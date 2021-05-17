@@ -5,70 +5,15 @@
  */
 package com.mycompany.p2ed.Tree;
 
+import com.mycompany.p2ed.Nodos.NodeAVL;
+
 /**
  *
  * @author sergi
  */
 public class AVL<T> {
     
-    private class Node<T>{
-        private String id;
-        private T data;
-        private Node<T> izq;
-        private Node<T> derc;
-        private int altura;
-
-        public Node(String id, T data) {
-            this.id = id;
-            this.data = data;
-            this.izq = null;
-            this.derc = null;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public Node<T> getIzq() {
-            return izq;
-        }
-
-        public Node<T> getDerc() {
-            return derc;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public void setIzq(Node<T> izq) {
-            this.izq = izq;
-        }
-
-        public void setDerc(Node<T> der) {
-            this.derc = der;
-        }       
-
-        public int getAltura() {
-            return altura;
-        }
-
-        public void setAltura(int altura) {
-            this.altura = altura;
-        }
-        
-        
-    }
-    
-     private Node<T> raiz;
+    private NodeAVL<T> raiz;
     private int cantNodos = 0;
     
     public AVL(){
@@ -78,28 +23,28 @@ public class AVL<T> {
         return cantNodos;
     }
     
-    private void updateAltura(Node<T> n) {
+    private void updateAltura(NodeAVL<T> n) {
         n.setAltura(1 + Math.max(altura(n.getIzq()),altura(n.getDerc())));
     }
 
-    private int altura(Node<T> n) {
+    private int altura(NodeAVL<T> n) {
         return n == null ? -1 : n.getAltura();
     }
 
-    private int getBalance(Node<T> n) {
+    private int getBalance(NodeAVL<T> n) {
         return (n == null) ? 0 : altura(n.getDerc()) - altura(n.getIzq());
     }
     
     public int getAltura() {
         return raiz == null ? -1 : raiz.getAltura();
     }
-    public Node<T> getRaiz(){
+    public NodeAVL<T> getRaiz(){
         return raiz;
     }
     
-    private Node<T> rotateRight(Node<T> y) {
-        Node<T> x = y.getIzq();
-        Node<T> z = x.getDerc();
+    private NodeAVL<T> rotateRight(NodeAVL<T> y) {
+        NodeAVL<T> x = y.getIzq();
+        NodeAVL<T> z = x.getDerc();
         x.setDerc(y);
         y.setIzq(z);
         updateAltura(y);
@@ -107,9 +52,9 @@ public class AVL<T> {
         return x;
     }
     
-    private Node<T> rotateLeft(Node<T> y) {
-        Node<T> x = y.getDerc();
-        Node<T> z = x.getIzq();
+    private NodeAVL<T> rotateLeft(NodeAVL<T> y) {
+        NodeAVL<T> x = y.getDerc();
+        NodeAVL<T> z = x.getIzq();
         x.setIzq(y);
         y.setDerc(z);
         updateAltura(y);
@@ -117,7 +62,7 @@ public class AVL<T> {
         return x;
     }
     
-    private Node<T> rebalance(Node<T> z) {
+    private NodeAVL<T> rebalance(NodeAVL<T> z) {
         updateAltura(z);
         int balance = getBalance(z);
         if (balance > 1) {
@@ -140,10 +85,10 @@ public class AVL<T> {
     public void add(String id, T object){
         raiz = insert(raiz,id,object);
     }   
-    private Node<T> insert(Node<T> node, String id, T object){
+    private NodeAVL<T> insert(NodeAVL<T> node, String id, T object){
         if (node == null) {
             cantNodos++;
-            return new Node<T>(id, object);        
+            return new NodeAVL<T>(id, object);        
         } else if (node.getId().compareTo(id) > 0) {
             node.setIzq(insert(node.getIzq(),id,object));            
         } else if (node.getId().compareTo(id) <  0 ) {
@@ -157,7 +102,7 @@ public class AVL<T> {
     public void remove(String id){                
         raiz = delete(raiz,id);
     }   
-    private Node<T> delete(Node<T> node, String id){
+    private NodeAVL<T> delete(NodeAVL<T> node, String id){
         if (node == null) {
             return node;
         } else if (node.getId().compareTo(id) > 0) {
@@ -168,7 +113,7 @@ public class AVL<T> {
             if (node.getIzq() == null || node.getDerc() == null) {
                 node = (node.getIzq() == null) ? node.getDerc() : node.getIzq();
             } else {
-                Node<T> mostLeftChild = mostLeftChild(node.getDerc());
+                NodeAVL<T> mostLeftChild = mostLeftChild(node.getDerc());
                 node.setId(mostLeftChild.getId());
                 node.setDerc(delete(node.getDerc(),node.getId()));
             }
@@ -178,8 +123,8 @@ public class AVL<T> {
         }
         return node;
     }    
-    private Node<T> mostLeftChild(Node<T> node) {
-        Node<T> current = node;
+    private NodeAVL<T> mostLeftChild(NodeAVL<T> node) {
+        NodeAVL<T> current = node;
         /* loop down to find the leftmost leaf */
         while (current.getIzq() != null) {
             current = current.getIzq();
@@ -187,8 +132,8 @@ public class AVL<T> {
         return current;
     }
     
-    public Node<T> find(String id) {
-        Node<T> current = raiz;
+    public NodeAVL<T> find(String id) {
+        NodeAVL<T> current = raiz;
         while (current != null) {
             if (current.getId().equals(id)) {
                break;
@@ -198,7 +143,7 @@ public class AVL<T> {
         return current;
     }
     public void Modificar(String id, T obj){
-        Node<T> node = find(id);
+        NodeAVL<T> node = find(id);
         if (node != null) {
             raiz = delete(raiz,id);
             raiz = insert(raiz,id,obj);
@@ -209,7 +154,7 @@ public class AVL<T> {
     }
     
     public T get(String id){
-        Node<T> current = find(id);
+        NodeAVL<T> current = find(id);
         if (current != null) {
             return current.getData();
         }else{
@@ -220,16 +165,16 @@ public class AVL<T> {
     public String getEstado(String nombre){
         String estado = "subgraph cluster_arbol_"+nombre+"{\nrankdir=TB;\n"
                 + "node[shape = record, style=filled, fillcolor=white];\n";
-        Node<T> aux = raiz;
+        NodeAVL<T> aux = raiz;
         if (aux == null) {
             return estado + " }";
         }
         estado += getSubEstados(aux,nombre);                   
         return estado + "}";
     }
-    private String getSubEstados(Node<T> raiz, String nombre){
+    private String getSubEstados(NodeAVL<T> raiz, String nombre){
         String estado = "";
-        Node<T> aux = raiz;
+        NodeAVL<T> aux = raiz;
         String actual = nombre+aux.getId();
         if (aux.getIzq() != null) {
             String iz = nombre+aux.getIzq().getId();

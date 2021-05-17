@@ -5,6 +5,7 @@
  */
 package com.mycompany.p2ed.listas;
 
+import com.mycompany.p2ed.Nodos.NodeCD;
 import com.mycompany.p2ed.objetos.Edificio;
 
 /**
@@ -13,49 +14,8 @@ import com.mycompany.p2ed.objetos.Edificio;
  */
 public class ListCircularDoble<T> {
     
-    private class Node<T>{
-        private String id;
-        private T data;
-        private Node<T> ant;
-        private Node<T> sig;
-
-        public Node(String id, T data) {
-            this.id = id;
-            this.data = data;
-            this.ant = null;
-            this.sig = null;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public Node<T> getAnt() {
-            return ant;
-        }
-
-        public Node<T> getSig() {
-            return sig;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public void setAnt(Node<T> ant) {
-            this.ant = ant;
-        }
-
-        public void setSig(Node<T> sig) {
-            this.sig = sig;
-        }       
-    }
-    private Node<T> root;
-    private Node<T> last;
+    private NodeCD<T> root;
+    private NodeCD<T> last;
     
     public ListCircularDoble(){
         root = null;
@@ -67,7 +27,7 @@ public class ListCircularDoble<T> {
         if (data1 != null) {
             return false;
         }
-        Node<T> nuevo = new Node<>(id, data);
+        NodeCD<T> nuevo = new NodeCD<>(id, data);
         if (root == null) {
             root = nuevo;
             root.setAnt(root);
@@ -84,7 +44,7 @@ public class ListCircularDoble<T> {
     }
     
     public T get(String id){
-        Node<T> aux = root;
+        NodeCD<T> aux = root;
         if (root==null) {
             return null;
         }
@@ -97,8 +57,22 @@ public class ListCircularDoble<T> {
         return null;
     }
     
+    public NodeCD getNode(String id){
+        NodeCD<T> aux = root;
+        if (root==null) {
+            return null;
+        }
+        do {
+            if (aux.getId().equals(id)) {
+                return aux;
+            }
+            aux = aux.getSig();
+        } while (aux != root);
+        return null;
+    }
+    
     public boolean show(){
-        Node<T> aux = root;
+        NodeCD<T> aux = root;
         if (root==null) {
             return false;
         }
@@ -110,7 +84,7 @@ public class ListCircularDoble<T> {
     }
     
     public boolean modificar(String id, T data){
-        Node<T> aux = root;
+        NodeCD<T> aux = root;
         do {
             if (aux.getId().equals(id)) {
                 aux.setData(data);
@@ -122,12 +96,13 @@ public class ListCircularDoble<T> {
     }
     
     public boolean eliminar(String id){
-        Node<T> aux = root;   
+        NodeCD<T> aux = root;   
         if (root == null) {
             return false;
         }
         do {
-            if (aux.getId().equals(id)) {            
+            if (aux.getId().equals(id)) {
+                aux.setData(null);
                 if (aux == root) {
                     if (last == root) {
                         root = null;
@@ -155,8 +130,8 @@ public class ListCircularDoble<T> {
     
     //graficar
     public String getEstado(String nombre){
-        String estado = "subgraph cluster_"+nombre+"{\nstyle=filled;\nstyle=filled;\ncolor=white;\nnode [shape=box,color=black];\n";
-        Node<T> aux = root;
+        String estado = "subgraph cluster_"+nombre+"{\nnode [shape=box,color=black];\n";
+        NodeCD<T> aux = root;
         if (root == null) {
             return estado +"}";
         }

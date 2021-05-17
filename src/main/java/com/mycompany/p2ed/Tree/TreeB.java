@@ -5,6 +5,10 @@
  */
 package com.mycompany.p2ed.Tree;
 
+import com.mycompany.p2ed.objetos.Curso;
+import com.mycompany.p2ed.objetos.Edificio;
+import com.mycompany.p2ed.objetos.Horario;
+import com.mycompany.p2ed.objetos.Salon;
 import java.util.Stack;
 
 /**
@@ -16,6 +20,8 @@ public class TreeB<T> {
     private int T;
     private int i = 0;
     private int iteracion = 0;
+    private String flechas = "";
+    private String subGrahp = "";
     
     private class minNode<T>{
         int id;
@@ -42,7 +48,7 @@ public class TreeB<T> {
     private Node<T> root;
     
     public TreeB(int t){
-        T = 2;
+        T = 3;
         root = new Node<>();
         root.n = 0;
         root.leaf = true;
@@ -390,27 +396,86 @@ public class TreeB<T> {
     private String getSubEstado(Node x,String nombre){        
         String estado = "";
         assert (x == null);
-        String actual = nombre+iteracion;
+        String actual = "struct_"+nombre+iteracion;
         estado += actual + "[ label =\"";
-        for (int i = 0; i < x.n; i++) {
-          //System.out.print(x.key[i] + " ");
+       for (int i = 0; i < x.n; i++) {
             if (i+1 == x.n) {
-                estado += x.key[i].data.toString();
+                estado += "<T"+i+"> " + x.key[i].data.toString();
             }else{
-                estado += x.key[i].data.toString()+ "|";
+                estado += "<T"+i+"> " + x.key[i].data.toString()+ "|";
             }
           
-        }
+       }
         estado += "\"];\n";
         if (!x.leaf) {
           for (int i = 0; i < x.n + 1; i++) {
             //Show(x.child[i]); 
             iteracion += 1;
-            estado += actual +  "->" + nombre+(iteracion) +";\n";
+            estado += actual +  "->" +  "struct_"+nombre+(iteracion) +";\n";
             estado += getSubEstado(x.child[i],nombre);
           }
         }     
         return estado;
     }
     
+    public String getEstadoTodo(String nombre){
+        flechas = "";
+        String estado = "subgraph cluster_arbol_"+nombre+"{\nrankdir=TB;\n"
+                + "node[shape = record, style=filled, fillcolor=white];\n";
+        iteracion = 0;
+        estado += getSubEstadoTodo(root,nombre);
+        estado += "}\n";
+        estado += subGrahp;
+        return estado;
+    }
+    private String getSubEstadoTodo(Node x,String nombre){        
+        String estado = "";
+        assert (x == null);
+        String actual = "struct_"+nombre+iteracion;
+        estado += actual + "[ label =\"";
+        for (int i = 0; i < x.n; i++) {
+        if (x.key[i].data.getClass().getSimpleName().equalsIgnoreCase("Horario")) {
+            if (i+1 == x.n) {
+                estado += "<T"+i+"> " + x.key[i].data.toString();
+            }else{
+                estado += "<T"+i+"> " + x.key[i].data.toString()+ "|";
+            }
+            Horario horario = (Horario)  x.key[i].data;            
+            if (horario.getSalon().getData() != null) {
+                Salon salon = (Salon) horario.getSalon().getData();
+                if (salon.getEdificio() != null) {
+                    String edificio =  horario.getEdificio().getNombre();
+                    flechas +=  actual+":T"+i +" -> salon_edificio_"+edificio + salon.getNumeroSalon()+"[color=green];\n";
+                }                
+            }
+            if (horario.getCatedratico() != null) {
+                 flechas +=  actual+":T"+i +" -> catedratico"+ horario.getCatedratico().getId()+"[color=blue];\n";
+            }
+            if (horario.getCurso().getData() != null) {
+                Curso curso = (Curso) horario.getCurso().getData();
+                flechas +=  actual+":T"+i +" -> curso_"+ curso.getCodigo()+"[color=brown4];\n";
+            }
+            if (horario.getAsignaciones() !=  null) {                    
+                subGrahp += horario.getAsignaciones().getEstado("Asignaciones", actual);
+                flechas += horario.getAsignaciones().getFlecha();
+            } 
+            
+        }          
+          
+        }
+        estado += "\"];\n";        
+        if (!x.leaf) {
+          for (int i = 0; i < x.n + 1; i++) {
+            //Show(x.child[i]); 
+            iteracion += 1;
+            estado += actual +  "->" +  "struct_"+nombre+(iteracion) +";\n";
+            estado += getSubEstadoTodo(x.child[i],nombre);
+          }
+        }     
+        //estado +=  flechas;
+        return estado;
+    }
+    public String getFlechas(){
+        return flechas;
+    }
 }

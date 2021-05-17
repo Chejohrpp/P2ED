@@ -5,6 +5,7 @@
  */
 package com.mycompany.p2ed.hash;
 
+import com.mycompany.p2ed.Nodos.NodeHash;
 import com.mycompany.p2ed.objetos.Usuario;
 
 /**
@@ -13,35 +14,9 @@ import com.mycompany.p2ed.objetos.Usuario;
  */
 public class Hash<T> {
     
-    private class Node<T>{
-        private int id;
-        private T data;
-        public Node(){
-            id = 0;
-            data = null;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-        
-    }
-    
     private static final double CARGA_MAXIMA = 0.55;
     private int size = 37;
-    private Node<T>[] listaId = new Node[size];
+    private NodeHash<T>[] listaId = new NodeHash[size];
     private int cantOcupado = 0;
     
     public Hash(){
@@ -51,7 +26,7 @@ public class Hash<T> {
     public void push(int id, T data){
         Integer  key = id % size;
         if (listaId[key] == null) {
-            listaId[key] =  new Node();
+            listaId[key] =  new NodeHash();
             listaId[key].setId(id);
             listaId[key].setData(data);
             cantOcupado++;
@@ -64,10 +39,10 @@ public class Hash<T> {
         }        
     }    
     private void reHash(){
-        Node<T>[] aux = listaId;      
+        NodeHash<T>[] aux = listaId;      
         size = getSigPrime(size*2);
-        listaId =  new Node[size];
-        for (Node i : aux) {
+        listaId =  new NodeHash[size];
+        for (NodeHash i : aux) {
             if (i != null) {
                 push(i.getId(),(T) i.getData());
             }
@@ -77,8 +52,8 @@ public class Hash<T> {
         int posicionNueva = (id % 7 + 1 )* iteracion;
         try{
             if (listaId[posicionNueva] == null) {
-                listaId[posicionNueva] =  new Node();
-               listaId[posicionNueva].setId(id);
+                listaId[posicionNueva] =  new NodeHash();
+                listaId[posicionNueva].setId(id);
                 listaId[posicionNueva].setData(data);
                 cantOcupado++;
             }else{
@@ -124,6 +99,41 @@ public class Hash<T> {
         }
     }
     
+    public NodeHash getNode(int id){
+        Integer  key = id % size;
+        if (listaId[key] != null) {
+            if(listaId[key].getId() ==  id){
+                return listaId[key];
+            }else{
+                return getInColisionNode(id, 0);
+            }            
+        }else{
+            return null;
+        }
+    }
+    
+    private NodeHash getInColisionNode(int id, int iteracion){
+        int posicionNueva = (id % 7 + 1 )* iteracion;
+        if (posicionNueva >= size) {
+            return null;
+        }
+        try{
+            if (listaId[posicionNueva] != null) {
+                if (listaId[posicionNueva].getId() == id) {
+                   return listaId[posicionNueva];
+                }else{
+                    return getInColisionNode(id,iteracion+1);
+                }
+            }else{
+                return null;
+            }            
+        }catch(Exception e){
+            System.out.println("No se encontro el dato: " + id );
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     private int getSigPrime(int n){
         int i,m=0,flag=0;        
         m=n/2;      
@@ -145,7 +155,6 @@ public class Hash<T> {
         Integer  key = id % size;
         if (listaId[key] != null) {
             if(listaId[key].getId() ==  id){
-                //System.out.println("Encotrado el id: " + id);
                 listaId[key].setData(null);
                 listaId[key] =  null;
                 return true;
@@ -164,6 +173,7 @@ public class Hash<T> {
         try{
             if (listaId[posicionNueva] != null) {
                 if (listaId[posicionNueva].getId() == id) {
+                    listaId[posicionNueva].setData(null);
                     listaId[posicionNueva] =  null;
                     return true;
                 }else{
@@ -218,7 +228,7 @@ public class Hash<T> {
     }
     
     public void show(){
-        for (Node<T> node : listaId) {
+        for (NodeHash<T> node : listaId) {
             if (node != null) {
                 System.out.println(node.getData());
                 node.setData(null);
@@ -239,12 +249,6 @@ public class Hash<T> {
             }
         }
         estado += "\"];\n";
-//        for (Node<T> node : listaId) {
-//            if (node != null) {
-//                String actual = nombre+node.getId();
-//                estado +=  actual + "[label=\""+ node.getData().toString()+" \"];\n";
-//            }            
-//        }
         for (int i = 0; i < listaId.length; i++) {
             if (listaId[i] != null) {
                 String actual = nombre+listaId[i].getId();

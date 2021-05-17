@@ -5,6 +5,10 @@
  */
 package com.mycompany.p2ed.objetos;
 
+import com.mycompany.p2ed.Nodos.NodeCD;
+import com.mycompany.p2ed.Nodos.NodoS;
+import com.mycompany.p2ed.listas.ListDoble;
+
 /**
  *
  * @author sergi
@@ -14,12 +18,13 @@ public class Horario {
     private int id;
     private String periodo;
     private String dia;
-    private Curso curso;
-    private Salon salon;
+    private NodeCD<Curso> curso;
+    private NodoS<Salon> salon;
     private Edificio edificio;
     private Catedratico catedratico;
+    private ListDoble<Asignar> asignaciones;
 
-    public Horario(int id, String periodo, String dia, Curso curso, Salon salon, Edificio edificio, Catedratico catedratico) {
+    public Horario(int id, String periodo, String dia, NodeCD curso, NodoS salon, Edificio edificio, Catedratico catedratico) {
         this.id = id;
         this.periodo = periodo;
         this.dia = dia;
@@ -27,6 +32,7 @@ public class Horario {
         this.salon = salon;
         this.edificio = edificio;
         this.catedratico = catedratico;
+        this.asignaciones =  new ListDoble<>();
     }
 
     public int getId() {
@@ -53,19 +59,19 @@ public class Horario {
         this.dia = dia;
     }
 
-    public Curso getCurso() {
+    public NodeCD getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(NodeCD curso) {
         this.curso = curso;
     }
 
-    public Salon getSalon() {
+    public NodoS getSalon() {
         return salon;
     }
 
-    public void setSalon(Salon salon) {
+    public void setSalon(NodoS salon) {
         this.salon = salon;
     }
 
@@ -85,9 +91,35 @@ public class Horario {
         this.catedratico = catedratico;
     }
 
+    public ListDoble<Asignar> getAsignaciones() {
+        return asignaciones;
+    }
+
+    public void setAsignaciones(ListDoble<Asignar> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
+
+    
     @Override
     public String toString() {
-        return id + "\\n" + periodo + "\\n" + dia ;
+        String estado = "";
+        if (curso.getData() != null) {
+            estado += "Curso: "+curso.getData().getCodigo()+"\\n";
+        }else{
+            estado += "Curso: null"+"\\n";
+        }
+        if (salon.getData() != null) {
+            estado += "Salon: "+salon.getData().getNumeroSalon()+"\\n";
+        }else{
+            estado += "Salon: null"+"\\n";
+        }
+        if(edificio != null){
+            estado += "Edificio: "+edificio.getNombre()+"\\n";
+        }
+        if (catedratico != null) {
+            estado += "Catedratico: "+catedratico.getId()+"\\n";
+        }        
+        return id + "\\n" + estado + periodo + "\\n" + dia ;
     }
     
 }

@@ -14,6 +14,7 @@ import com.mycompany.p2ed.objetos.*;
 import com.mycompany.p2ed.listas.*;
 import com.mycompany.p2ed.hash.*;
 import com.mycompany.p2ed.Tree.*;
+import com.mycompany.p2ed.Nodos.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -720,7 +721,7 @@ class CUP$ParserDatos$actions {
 						String Tipo = tipo.getLexema();
 						Usuario user = new Usuario(ID,Nombre,pass,Tipo);
 						if(Tipo.equalsIgnoreCase("estudiante")){
-							Estudiante estud = listEstudiantes.get(ID);
+							NodeHash estud = listEstudiantes.getNode(ID);
 							if(estud ==  null){
 								addError(id," No exite el estudiante con el carnet: " + id.getLexema());
 							}else{
@@ -1045,7 +1046,7 @@ class CUP$ParserDatos$actions {
 						String CodEdificio = codEdificio.getLexema();//Edificio
 						int NumId = Integer.valueOf(numId.getLexema());//Catedratico
 
-						Curso curso = listCurso.get(String.valueOf(CodCurso));
+						NodeCD curso = listCurso.getNode(String.valueOf(CodCurso));
 						Edificio edificio =  listEdificios.get(CodEdificio);
 						Catedratico catedratico =  listCadedraticos.get(String.valueOf(NumId));
 						if(curso == null){
@@ -1055,7 +1056,7 @@ class CUP$ParserDatos$actions {
 						}else if(catedratico == null){
 							addError(numId,"El catedratico no existe");
 						}else{
-							Salon salon = (Salon) edificio.getSalones().get(CodSalon);
+							NodoS salon = edificio.getSalones().getNodo(CodSalon);
 							 if(salon == null){
 								addError(codSalon,"El salon no existe en el edificio");
 							}else{
@@ -1118,6 +1119,7 @@ class CUP$ParserDatos$actions {
 							int Zona = Integer.valueOf(zona.getLexema());
 							int Ex_final = Integer.valueOf(ex_final.getLexema());
 							Estudiante estud = listEstudiantes.get(Carnet);
+							NodeHash estu1 =  listEstudiantes.getNode(Carnet);
 							Horario horario = listHorario.get(CodHorario);
 							if (estud == null) {
 								addError(carnet,"El estudiante no existe");
@@ -1127,7 +1129,9 @@ class CUP$ParserDatos$actions {
 								Asignar asginar =  listAsignacion.get(Carnet,CodHorario);
 								if(asginar == null){
 									asginar = new Asignar(estud,horario,Zona,Ex_final);
+									asginar.setEstudiante1(estu1);
 									listAsignacion.push(Carnet,CodHorario,asginar);
+									horario.getAsignaciones().push(Carnet,CodHorario,asginar);									
 								}else{
 									addError(carnet,"Ya exite una asginacion en el horario y el estudiante");
 								}

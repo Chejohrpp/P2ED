@@ -5,6 +5,8 @@
  */
 package com.mycompany.p2ed.objetos;
 
+import com.mycompany.p2ed.Nodos.NodeHash;
+
 /**
  *
  * @author sergi
@@ -15,9 +17,9 @@ public class Usuario {
     private String nombre;
     private String password;
     private String tipo;
-    private Estudiante estudiante;
+    private NodeHash<Estudiante> estudiante;
 
-    public Usuario(int id, String nombre, String password, String tipo, Estudiante estudiante) {
+    public Usuario(int id, String nombre, String password, String tipo, NodeHash estudiante) {
         this.id = id;
         this.nombre = nombre;
         this.password = password;
@@ -65,16 +67,23 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public Estudiante getEstudiante() {
+    public NodeHash<Estudiante> getEstudiante() {
         return estudiante;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
+    public void setEstudiante(NodeHash<Estudiante> estudiante) {
         this.estudiante = estudiante;
-    }
+    }    
 
     @Override
     public String toString() {
+        if (estudiante != null) {
+            if (estudiante.getData() != null) {
+                 return estudiante.getData().getCarnet() + "\\n" + nombre + "\\n" + password + "\\n" + tipo;
+            }else{
+                 return "null" + "\\n" + nombre + "\\n" + password + "\\n" + tipo;
+            }
+        }
         return id + "\\n" + nombre + "\\n" + password + "\\n" + tipo;
     }
     

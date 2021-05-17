@@ -5,6 +5,7 @@
  */
 package com.mycompany.p2ed.listas;
 
+import com.mycompany.p2ed.Nodos.NodeD;
 import com.mycompany.p2ed.objetos.Asignar;
 import com.mycompany.p2ed.objetos.Salon;
 import java.lang.reflect.Field;
@@ -14,65 +15,17 @@ import java.lang.reflect.Field;
  * @author sergi
  */
 public class ListDoble<T> {
-    
-    private class Node<T>{
-        private int carnet;
-        private int codHorario;
-        private Node<T> ant;
-        private Node<T> sig;
-        private T data;
-
-        public Node(int carnet, int codHorario, Node<T> ant, Node<T> sig, T data) {
-            this.carnet = carnet;
-            this.codHorario = codHorario;
-            this.ant = ant;
-            this.sig = sig;
-            this.data = data;
-        }   
-
-        public int getCarnet() {
-            return carnet;
-        }
-
-        public int getCodHorario() {
-            return codHorario;
-        }
-
-        public Node<T> getAnt() {
-            return ant;
-        }
-
-        public Node<T> getSig() {
-            return sig;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public void setAnt(Node<T> ant) {
-            this.ant = ant;
-        }
-
-        public void setSig(Node<T> sig) {
-            this.sig = sig;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }        
-           
-    }
-    
-    private Node<T> root;
-    private Node<T> last;
+         
+    private NodeD<T> root;
+    private NodeD<T> last;
+    private String flecha="";
     
     public ListDoble(){
         root = null;
     }
     
     public void push(int carnet, int codHorario, T data){
-        Node<T> nuevo = new Node<>(carnet, codHorario, null, null, data);        
+        NodeD<T> nuevo = new NodeD<>(carnet, codHorario, null, null, data);        
         if (root == null) {
             root = nuevo;
             last = root;
@@ -84,7 +37,7 @@ public class ListDoble<T> {
     }
     
     public T get(int carnet, int codHorario){
-        Node<T> aux = root;
+        NodeD<T> aux = root;
         while(aux != null){
             if (aux.getCarnet()== carnet && aux.getCodHorario() ==  codHorario) {
                 return aux.getData();
@@ -95,7 +48,7 @@ public class ListDoble<T> {
     }
     
     public boolean modificar(int carnet, int codHorario, T data){
-        Node<T> aux = root;
+        NodeD<T> aux = root;
         while(aux != null){
             if (aux.getCarnet()== carnet && aux.getCodHorario() ==  codHorario) {
                 aux.setData(data);
@@ -106,7 +59,7 @@ public class ListDoble<T> {
         return false;
     }
     public boolean eliminar(int carnet, int codHorario){
-        Node<T> aux = root;
+        NodeD<T> aux = root;
         if (root.getCarnet() == carnet && root.getCodHorario() == codHorario) {
             root = root.getSig();
             root.setAnt(null);
@@ -114,14 +67,17 @@ public class ListDoble<T> {
         }
         while(aux.getSig() != null){
             if (aux.getSig().getCarnet() == carnet && aux.getSig().getCodHorario() == codHorario) {
-                aux.setSig(aux.getSig().getSig());
+                if (aux.getSig() == last) {
+                    last = aux;
+                }
                 try{
                     if (aux.getSig().getSig() != null) {
-                        aux.getSig().getSig().setAnt(aux);
+                        aux.getSig().getSig().setAnt(aux);                        
                     }
                 }catch(Exception e){
-                    
-                }                                
+                    e.printStackTrace();
+                }    
+                aux.setSig(aux.getSig().getSig());
                 return true;
             }
             aux = aux.getSig();
@@ -131,7 +87,7 @@ public class ListDoble<T> {
     
     public String getEstado(String nombre){
         String estado = "subgraph cluster_"+nombre+"{\nstyle=filled;\nstyle=filled;\ncolor=white;\nnode [shape=box,color=black];\n";
-        Node aux = root;
+        NodeD aux = root;
         if (root == null) {
             return estado;
         }
@@ -139,31 +95,76 @@ public class ListDoble<T> {
             if (aux.getData().getClass().getSimpleName().equals("Asignar")) {
                 Asignar asig = (Asignar) aux.getData();
                 if (asig.getEstudiante() != null) {
-                    String actual = nombre+asig.getEstudiante().getCarnet();
+                    String actual = "_"+aux.getCodHorario()+nombre+asig.getEstudiante().getCarnet();
                     //System.out.println(asig.getEstudiante());
                     if (aux == root)
                     {                    
                         if (last!=root)
                         {
-                            String sig = nombre+ aux.getSig().getCarnet();
+                            String sig = "_"+aux.getSig().getCodHorario()+nombre+ aux.getSig().getCarnet();
                             estado += actual +"->"+sig + ";\n";
                         }
                     }else if (aux != last){
-                            String sig = nombre+ aux.getSig().getCarnet();
+                            String sig = "_"+aux.getSig().getCodHorario()+nombre+ aux.getSig().getCarnet();
                             estado += actual +"->"+sig + ";\n";
-                            String ant = nombre + aux.getAnt().getCarnet();
+                            String ant = "_"+aux.getAnt().getCodHorario()+nombre + aux.getAnt().getCarnet();
                             estado +=  actual + "->" + ant + ";\n";
                     }else{
-                        String ant = nombre + aux.getAnt().getCarnet();
+                        String ant = "_"+aux.getAnt().getCodHorario()+nombre + aux.getAnt().getCarnet();
                         estado +=  actual + "->" + ant + ";\n";
                     }
-                    estado +=  actual + "[label=\""+ aux.getCarnet()+ aux.getData().toString() +" \"];\n";
+                    estado +=  actual + "[label=\""+ aux.getData().toString() +"\\nCodigo Horario: "+aux.getCodHorario()+" \"];\n";
                 }
             }
                                   
             aux = aux.getSig();            
         } while (aux != null);        
         return estado + "}";
+    }
+    
+    public String getEstado(String nombre, String idHorario){
+        if (root == null) {
+            return "";
+        }
+        String estado = "subgraph cluster_"+nombre+"_"+idHorario+"{\nrankdir=TB;\n"
+                + "node[shape = record, style=filled, fillcolor=white];\n";
+        NodeD aux = root;
+        do {
+            if (aux.getData().getClass().getSimpleName().equals("Asignar")) {
+                Asignar asig = (Asignar) aux.getData();
+                if (asig.getEstudiante1() != null) {
+                    String actual = idHorario+nombre+asig.getEstudiante().getCarnet();
+                    //System.out.println(asig.getEstudiante());
+                    if (aux == root)
+                    {                    
+                        flecha += idHorario + " -> "+ actual + " [arrowhead=onormal, arrowtail=dot, dir=both,color=red,arrowsize=0.9];\n";
+                        if (last!=root)
+                        {
+                            String sig = idHorario+nombre+ aux.getSig().getCarnet();
+                            estado += actual +"->"+sig + ";\n";
+                        }
+                    }else if (aux != last){
+                            String sig = idHorario+nombre+ aux.getSig().getCarnet();
+                            estado += actual +"->"+sig + ";\n";
+                            String ant = idHorario+nombre + aux.getAnt().getCarnet();
+                            estado +=  actual + "->" + ant + ";\n";
+                    }else{
+                        String ant = idHorario+nombre + aux.getAnt().getCarnet();
+                        estado +=  actual + "->" + ant + ";\n";
+                    }
+                    estado +=  actual + "[label=\""+ aux.getData().toString() +" \"];\n";
+                    if (asig.getEstudiante1().getData() != null) {
+                        flecha += actual +" -> Estudiante" + asig.getEstudiante().getCarnet()+"[arrowhead=onormal, arrowtail=dot, dir=both,color=x11maroon,arrowsize=0.9];\n";
+                    }
+                }
+            }                                  
+            aux = aux.getSig();            
+        } while (aux != null);       
+        return estado +"}\n";
+    }
+    
+    public String getFlecha(){
+        return flecha;
     }
     
 }

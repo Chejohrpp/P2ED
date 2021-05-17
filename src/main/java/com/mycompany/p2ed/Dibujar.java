@@ -31,6 +31,10 @@ public class Dibujar {
          String dibujar = "digraph structs{node [shape=plaintext];\n "+estado+" }";
          crearPng(dibujar,nombreImg);
      }
+     private void DibujarLR(String estado,String nombreImg){
+         String dibujar = "digraph g{\nrankdir=LR\n"+estado+" }";        
+         crearPng(dibujar,nombreImg);
+     }
      private void crearPng(String dibujar, String nombreImg){
          File fileDibujable = new File("img/dibujable.dot");
         if (!fileDibujable.exists()) {
@@ -63,5 +67,8 @@ public class Dibujar {
      }
      public void estrucGeneric(String estado, String nombre){
          dibujarSistema(estado,nombre);
+     }
+     public void hash(String estado,String nombre){
+         DibujarLR(estado,nombre);
      }
 }

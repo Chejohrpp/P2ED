@@ -5,13 +5,15 @@
  */
 package com.mycompany.p2ed.listas;
 
+import com.mycompany.p2ed.Nodos.NodoS;
+
 /**
  *
  * @author sergi
  */
 public class ListSimple<T> {
     
-    private Nodo<T> root;
+    private NodoS<T> root;
 
     public ListSimple(){
         root = null;
@@ -24,11 +26,11 @@ public class ListSimple<T> {
         }
         
        if (root!=null) {
-           Nodo<T> tmp = root;
-            root = new Nodo<T>(id,data,tmp);
+           NodoS<T> tmp = root;
+            root = new NodoS<T>(id,data,tmp);
        }
        else{
-           root = new Nodo<T>(id,data,null);
+           root = new NodoS<T>(id,data,null);
        }
        return true;
     }
@@ -45,7 +47,7 @@ public class ListSimple<T> {
     }
     
     public T get(int id){
-        Nodo<T> aux = root;
+        NodoS<T> aux = root;
         while(aux != null){
             if (aux.getId() ==  id) {
                 return aux.getData();
@@ -55,14 +57,27 @@ public class ListSimple<T> {
         return null;
     }
     
+    public NodoS getNodo(int id){
+        NodoS<T> aux = root;
+        while(aux != null){
+            if (aux.getId() ==  id) {
+                return aux;
+            }
+            aux = aux.getNext();
+        }
+        return null;
+    }
+    
     public boolean eliminar(int id){
-        Nodo<T> aux = root;
+        NodoS<T> aux = root;
         if (root.getId() == id) {
+            root.setData(null);
             root = root.getNext();
             return true;
         }
         while(aux.getNext() != null){
             if (aux.getNext().getId() == id) {
+                aux.getNext().setData(null);
                 aux.setNext(aux.getNext().getNext());
                 return true;
             }
@@ -72,7 +87,7 @@ public class ListSimple<T> {
     }
     
     public boolean Modificar(int id, T data){
-        Nodo<T> aux = root;
+        NodoS<T> aux = root;
         while(aux != null){
             if (aux.getId() ==  id) {
                 aux.setData(data);
@@ -85,7 +100,7 @@ public class ListSimple<T> {
     
     public String getEstado(String nombre, String idEdificio){
         String estado = "";
-        Nodo aux = root;
+        NodoS aux = root;
         if (root == null) {
             return estado;
         }
@@ -107,39 +122,5 @@ public class ListSimple<T> {
             aux = aux.getNext();
         } while (aux != null);        
         return estado;
-    }
-
-    private class Nodo <T>{
-        
-        private int id;
-        private Nodo<T> next;
-        private T data;
-
-        private Nodo(int id ,T data, Nodo<T> next){
-            this.id = id;
-            this.next = next;
-            this.data = data;
-        }
-
-        private Nodo<T> getNext(){
-            return this.next;
-        }
-
-        private T getData(){
-            return this.data;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setNext(Nodo<T> next) {
-            this.next = next;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }    
-
     }
 }
