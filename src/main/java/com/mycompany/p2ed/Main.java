@@ -6,6 +6,7 @@
 package com.mycompany.p2ed;
 
 import com.mycompany.p2ed.Informacion.Almacenamiento;
+import com.mycompany.p2ed.fronted.Login;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +27,10 @@ public class Main {
     
     public static void main(String[] args) {        
         almacenamiento.cargarDatos(null);
-        dibujar.estrucGeneric(almacenamiento.getEstadoTodo(), "TODO");
+        Login login = new Login(almacenamiento);
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
+        //dibujar.estrucGeneric(almacenamiento.getEstadoTodo(), "TODO");
         //dibujar();
     }
     

@@ -16,8 +16,13 @@ import javax.swing.JFrame;
 public class CargaDatos {
     
     private JFrame frame;
+    public CargaDatos(JFrame frame) {
+        this.frame = frame;
+        //frame.setVisible(true);
+        BringToFront();
+    }
     public CargaDatos() {
-        frame = new JFrame();
+        this.frame = new JFrame();
         frame.setVisible(true);
         BringToFront();
     }

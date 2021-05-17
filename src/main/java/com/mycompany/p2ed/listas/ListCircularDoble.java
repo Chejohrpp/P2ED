@@ -107,9 +107,9 @@ public class ListCircularDoble<T> {
                     if (last == root) {
                         root = null;
                         last = null;
-                    }else{
+                    }else{                        
                         root.getSig().setAnt(last);                        
-                        root = last.getSig();
+                        root = root.getSig();
                         last.setSig(root);
                     }               
                 }else if(aux == last){
