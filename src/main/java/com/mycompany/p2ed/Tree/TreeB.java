@@ -74,6 +74,15 @@ public class TreeB<T> {
     }
   }
   
+  public boolean mod(int key, T data){
+      Node aux = Search(root,key);
+      if (aux == null) {
+          return false;
+        }
+      aux.key[i].data = data;
+      return true;
+  }
+  
   public T get(int key){
         Node aux = Search(root,key);
         if (aux == null) {

@@ -7,10 +7,7 @@ package com.mycompany.p2ed.fronted.Opciones;
 
 import com.mycompany.p2ed.Informacion.Almacenamiento;
 import com.mycompany.p2ed.fronted.FormAsingnar;
-import com.mycompany.p2ed.fronted.FormCatedratico;
-import com.mycompany.p2ed.fronted.FormEstudiante;
 import com.mycompany.p2ed.objetos.Asignar;
-import com.mycompany.p2ed.objetos.Catedratico;
 import com.mycompany.p2ed.objetos.Estudiante;
 import com.mycompany.p2ed.objetos.Horario;
 import javax.swing.JFrame;
@@ -83,7 +80,6 @@ public class FunctionsAsignacion {
                  JOptionPane.showMessageDialog(jframe,"No se encontro el Estudiante: " + id,"error",JOptionPane.ERROR_MESSAGE); 
              }
         }catch(Exception e){
-            e.printStackTrace();
             JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"error",JOptionPane.ERROR_MESSAGE);          
         }
     }

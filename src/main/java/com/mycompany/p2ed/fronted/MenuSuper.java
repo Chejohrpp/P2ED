@@ -32,6 +32,7 @@ public class MenuSuper extends javax.swing.JFrame {
     private FunctionsEstudiante funEst;
     private FunctionsCatedratico funCat;
     private FunctionsAsignacion funAsig;
+    private FunctionsHorario funHor;
     /**
      * Creates new form MenuSuper
      * @param almacenamiento
@@ -46,6 +47,7 @@ public class MenuSuper extends javax.swing.JFrame {
         funEst = new FunctionsEstudiante(almacenamiento,this);
         funCat = new FunctionsCatedratico(almacenamiento,this);
         funAsig = new FunctionsAsignacion(almacenamiento,this);
+        funHor = new FunctionsHorario(almacenamiento,this);
     }
 
     /**
@@ -318,6 +320,11 @@ public class MenuSuper extends javax.swing.JFrame {
         jMenu11.setText("Horario");
 
         modHorario.setText("Modificar");
+        modHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modHorarioActionPerformed(evt);
+            }
+        });
         jMenu11.add(modHorario);
 
         jMenuBar1.add(jMenu11);
@@ -557,6 +564,11 @@ public class MenuSuper extends javax.swing.JFrame {
         // TODO add your handling code here:
         funAsig.delete();
     }//GEN-LAST:event_deleteAsigActionPerformed
+
+    private void modHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modHorarioActionPerformed
+        // TODO add your handling code here:
+        funHor.mod();
+    }//GEN-LAST:event_modHorarioActionPerformed
 
     private static BufferedReader converterBuffer(File file){
         try{
