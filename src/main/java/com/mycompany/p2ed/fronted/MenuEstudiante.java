@@ -6,7 +6,6 @@
 package com.mycompany.p2ed.fronted;
 
 import com.mycompany.p2ed.Informacion.Almacenamiento;
-import com.mycompany.p2ed.fronted.Opciones.FunctionsReportes;
 import com.mycompany.p2ed.fronted.Reportes.CursoEstudiante;
 import com.mycompany.p2ed.fronted.Reportes.NotasEstudiante;
 
@@ -18,15 +17,13 @@ public class MenuEstudiante extends javax.swing.JFrame {
     
     private Almacenamiento almacenamiento;
     private int carnet;
-    private FunctionsReportes funReport;
     /**
      * Creates new form MenuEstudiante
      */
     public MenuEstudiante(Almacenamiento almacenamiento, int carnet,String name) {
         initComponents();
         this.almacenamiento = almacenamiento;
-        this.carnet = carnet;
-        funReport = new FunctionsReportes(almacenamiento,this);        
+        this.carnet = carnet;       
         lblId.setText("Carnet: "+String.valueOf(carnet));
         lblName.setText("Nombre: "+name);
     }

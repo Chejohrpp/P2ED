@@ -51,7 +51,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("Iniciar Sesion");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Nombre de Usuaio");
+        jLabel2.setText("Nombre de Usuario");
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAceptar.setText("Ingresar");
