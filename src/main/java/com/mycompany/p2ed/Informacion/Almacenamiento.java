@@ -26,6 +26,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,11 +47,11 @@ public class Almacenamiento {
         //No se pueden eliminar: horario,(no)catedraticos
     }
     
-    public void cargarDatos(BufferedReader texto){
+    public void cargarDatos(BufferedReader texto,JFrame jframe){
         //Reader inputString = new StringReader(texto);
         //BufferedReader reader = new BufferedReader(inputString);
         try{            
-            BufferedReader bufer = new BufferedReader(new FileReader("C:\\Users\\sergi\\OneDrive\\Documentos\\Datos.txt",StandardCharsets.UTF_8));
+            //BufferedReader bufer = new BufferedReader(new FileReader("C:\\Users\\sergi\\OneDrive\\Documentos\\Datos.txt",StandardCharsets.UTF_8));
             try{
                 //LexerDatos lexico = new LexerDatos(reader);
                 LexerDatos lexico = new LexerDatos(texto);
@@ -71,11 +73,15 @@ public class Almacenamiento {
                 
                                 
                 List<String> errores = parse.getListErrores();
+                String erroresString = "";
                 for (String errore : errores) {
-                    System.out.println(errore);
+                    erroresString += errore+"\n";
                 }
                 if (errores.isEmpty()) {
-                    System.out.println("Datos cargados correctamente");
+                    //System.out.println("Datos cargados correctamente");
+                    JOptionPane.showMessageDialog(jframe,"Datos cargador correctamente","Hecho",JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                     JOptionPane.showMessageDialog(jframe,erroresString,"error",JOptionPane.ERROR_MESSAGE);
                 }
             
             }catch(Exception e){

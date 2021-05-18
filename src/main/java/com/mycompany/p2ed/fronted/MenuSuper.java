@@ -507,7 +507,7 @@ public class MenuSuper extends javax.swing.JFrame {
         CargaDatos cargar =  new CargaDatos();
         File file = cargar.getFile();
         if (file != null) {
-            almacenamiento.cargarDatos(converterBuffer(file));
+            almacenamiento.cargarDatos(converterBuffer(file),this);
         }        
     }//GEN-LAST:event_cargaDatosActionPerformed
 

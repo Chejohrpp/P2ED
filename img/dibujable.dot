@@ -53,7 +53,7 @@ struct_Horario0[ label ="<T0> 3\nCurso: 777\nSalon: 105\nEdificio: t3\nCatedrati
 struct_Horario0->struct_Horario1;
 struct_Horario1[ label ="<T0> 1\nCurso: 777\nSalon: 105\nEdificio: t3\nCatedratico: 12345\n7:10am-8:00am\nlunes|<T1> 2\nCurso: 777\nSalon: 105\nEdificio: t3\nCatedratico: 12345\n8:00am-8:50am\nlunes"];
 struct_Horario0->struct_Horario2;
-struct_Horario2[ label ="<T0> 4\nCurso: 777\nSalon: 105\nEdificio: t3\nCatedratico: 47854\n8:00am-8:50am\nviernes|<T1> 5\nCurso: 771\nSalon: 109\nEdificio: t3\nCatedratico: 12345\n7:10am-8:00am\nSISISISISISI ORA ORA ORA"];
+struct_Horario2[ label ="<T0> 4\nCurso: 777\nSalon: 105\nEdificio: t3\nCatedratico: 47854\n8:00am-8:50am\nviernes|<T1> 5\nCurso: 771\nSalon: 109\nEdificio: t3\nCatedratico: 12345\n7:10am-8:00am\nmartes"];
 struct_Horario0->struct_Horario3;
 struct_Horario3[ label ="<T0> 7\nCurso: 771\nSalon: 109\nEdificio: t3\nCatedratico: 47854\n7:10am-8:00am\njueves|<T1> 8\nCurso: 771\nSalon: 109\nEdificio: t3\nCatedratico: 47854\n8:00am-8:50am\njueves"];
 struct_Horario0->struct_Horario4;

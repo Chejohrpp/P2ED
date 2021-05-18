@@ -26,12 +26,10 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     
     public static void main(String[] args) {        
-        //almacenamiento.cargarDatos(null);
         Login login = new Login(almacenamiento);
         login.setLocationRelativeTo(null);
         login.setVisible(true);
-        //dibujar.estrucGeneric(almacenamiento.getEstadoTodo(), "TODO");
-        //dibujar();
+
     }    
     public static void dibujar(){
         //dibujar.avlCatedraticos(almacenamiento.getEstadoCatedraticos());              1
