@@ -227,6 +227,33 @@ public class TreeB<T> {
       }
     }
   }
+  
+  public void getCursoSalon(int codigoSalon,DefaultTableModel dfm){
+      AVL<String> listCurso = new AVL();
+      getSubCursoSalon(root,codigoSalon,dfm,listCurso);
+      
+  }
+  private void getSubCursoSalon(Node x, int codigoSalon,DefaultTableModel dfm,AVL<String> listCurso){
+      assert (x == null);
+    for (int i = 0; i < x.n; i++) {
+      Horario horario = (Horario) x.key[i].data;
+      Salon salon = (Salon) horario.getSalon().getData();
+        if (salon.getNumeroSalon() == codigoSalon) {
+            Curso curso = (Curso) horario.getCurso().getData();
+            String cur = listCurso.get(curso.getNombre());
+            if (cur == null) {
+                String[] data = {String.valueOf(codigoSalon),curso.getNombre()};
+                dfm.addRow(data);
+                listCurso.add(curso.getNombre(), curso.getNombre());
+            }
+        }
+    }
+    if (!x.leaf) {
+      for (int i = 0; i < x.n + 1; i++) {
+        getSubCursoSalon(x.child[i],codigoSalon,dfm,listCurso);
+      }
+    }
+  }
 
   // Check if present
   public boolean Contain(int k) {

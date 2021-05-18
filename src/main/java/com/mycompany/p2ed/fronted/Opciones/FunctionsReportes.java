@@ -8,9 +8,12 @@ package com.mycompany.p2ed.fronted.Opciones;
 import com.mycompany.p2ed.Informacion.Almacenamiento;
 import com.mycompany.p2ed.fronted.FormCurso;
 import com.mycompany.p2ed.fronted.FormEstudiante;
+import com.mycompany.p2ed.fronted.FormSalones;
 import com.mycompany.p2ed.fronted.Reportes.*;
 import com.mycompany.p2ed.objetos.Curso;
+import com.mycompany.p2ed.objetos.Edificio;
 import com.mycompany.p2ed.objetos.Estudiante;
+import com.mycompany.p2ed.objetos.Salon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -57,6 +60,27 @@ public class FunctionsReportes {
              }
         }catch(Exception e){
             JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"error",JOptionPane.ERROR_MESSAGE);          
+        }
+    }
+    public void CursoSalon(){
+        try{
+             String edificio= JOptionPane.showInputDialog("Ingrese el nombre del edificio donde esta el salon");
+              Edificio edi = almacenamiento.getListEdificio().get(edificio);
+             if (edi != null) {
+                String numeroSalon = JOptionPane.showInputDialog("Ingrese el numero de salon");             
+                Salon salon = (Salon) edi.getSalones().get(Integer.parseInt(numeroSalon));             
+                if (salon != null) {
+                   CursoSalon formSalon = new CursoSalon(almacenamiento,Integer.parseInt(numeroSalon));
+                   formSalon.setLocationRelativeTo(null);
+                   formSalon.setVisible(true);
+               }else{
+                    JOptionPane.showMessageDialog(jframe,"No se encontro el Salon: " + numeroSalon,"error",JOptionPane.ERROR_MESSAGE); 
+                }
+            }else{
+                 JOptionPane.showMessageDialog(jframe,"No se encontro el edificio: " + edificio,"error",JOptionPane.ERROR_MESSAGE); 
+             }             
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"error",JOptionPane.ERROR_MESSAGE);
         }
     }
     
