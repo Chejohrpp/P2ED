@@ -32,12 +32,7 @@ public class Main {
         login.setVisible(true);
         //dibujar.estrucGeneric(almacenamiento.getEstadoTodo(), "TODO");
         //dibujar();
-    }
-    
-    public static void menu(){
-        
-    }
-    
+    }    
     public static void dibujar(){
         //dibujar.avlCatedraticos(almacenamiento.getEstadoCatedraticos());              1
         //dibujar.estrucGeneric(almacenamiento.getEstadoEdificios(),"ListEdificos");    2  
@@ -98,42 +93,5 @@ public class Main {
                 default:break;
             }            
         }        
-    }
-    
-    public static void cargarDatos(){
-        CargaDatos cargar =  new CargaDatos();
-        File file = cargar.getFile();
-        almacenamiento.cargarDatos(converterBuffer(file));        
-    }
-    private static BufferedReader converterBuffer(File file){
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(file,StandardCharsets.UTF_8));
-            return br;
-        }catch(Exception e){            
-        }
-        return null;
-    }
-    
-    private static void menuInicio(){
-        while(true){
-            System.out.println("Elija la opcion:");
-            System.out.println("1.Iniciar sesion");
-            System.out.println("2.Salir");
-            String opcion = scanner.nextLine();
-            if (opcion.equalsIgnoreCase("1")) {
-                iniciarSesion();
-            }else if(opcion.equalsIgnoreCase("2")){
-                break;
-            }
-        }
-    }
-    private static void iniciarSesion(){
-        OUTER:
-        while(true){
-            String name = scanner.nextLine();
-            String password = scanner.nextLine();
-            break OUTER;
-        }
-    }
-         
+    }      
 }

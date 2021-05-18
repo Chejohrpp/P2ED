@@ -61,8 +61,8 @@ public class ListDoble<T> {
     public boolean eliminar(int carnet, int codHorario){
         NodeD<T> aux = root;
         if (root.getCarnet() == carnet && root.getCodHorario() == codHorario) {
-            root = root.getSig();
             root.setAnt(null);
+            root = root.getSig();            
             return true;
         }
         while(aux.getSig() != null){

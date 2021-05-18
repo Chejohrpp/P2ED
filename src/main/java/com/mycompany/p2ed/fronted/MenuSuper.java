@@ -31,6 +31,7 @@ public class MenuSuper extends javax.swing.JFrame {
     private FunctionsCursos funCursos;
     private FunctionsEstudiante funEst;
     private FunctionsCatedratico funCat;
+    private FunctionsAsignacion funAsig;
     /**
      * Creates new form MenuSuper
      * @param almacenamiento
@@ -44,6 +45,7 @@ public class MenuSuper extends javax.swing.JFrame {
         funCursos = new FunctionsCursos(almacenamiento,this);
         funEst = new FunctionsEstudiante(almacenamiento,this);
         funCat = new FunctionsCatedratico(almacenamiento,this);
+        funAsig = new FunctionsAsignacion(almacenamiento,this);
     }
 
     /**
@@ -88,7 +90,7 @@ public class MenuSuper extends javax.swing.JFrame {
         modAsig = new javax.swing.JMenuItem();
         deleteAsig = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
-        jMenuItem23 = new javax.swing.JMenuItem();
+        modHorario = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         treeCatedraticos = new javax.swing.JMenuItem();
         GraficarEdificiosSalones = new javax.swing.JMenuItem();
@@ -296,17 +298,27 @@ public class MenuSuper extends javax.swing.JFrame {
         jMenu10.add(addAsign);
 
         modAsig.setText("Modificar");
+        modAsig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modAsigActionPerformed(evt);
+            }
+        });
         jMenu10.add(modAsig);
 
         deleteAsig.setText("Eliminar");
+        deleteAsig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAsigActionPerformed(evt);
+            }
+        });
         jMenu10.add(deleteAsig);
 
         jMenuBar1.add(jMenu10);
 
         jMenu11.setText("Horario");
 
-        jMenuItem23.setText("Modificar");
-        jMenu11.add(jMenuItem23);
+        modHorario.setText("Modificar");
+        jMenu11.add(modHorario);
 
         jMenuBar1.add(jMenu11);
 
@@ -426,6 +438,7 @@ public class MenuSuper extends javax.swing.JFrame {
 
     private void addAsignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAsignActionPerformed
         // TODO add your handling code here:
+        funAsig.add();
     }//GEN-LAST:event_addAsignActionPerformed
 
     private void verAsginacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verAsginacionesActionPerformed
@@ -535,6 +548,16 @@ public class MenuSuper extends javax.swing.JFrame {
         funCat.mod();
     }//GEN-LAST:event_modCatedraticoActionPerformed
 
+    private void modAsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modAsigActionPerformed
+        // TODO add your handling code here:
+        funAsig.mod();
+    }//GEN-LAST:event_modAsigActionPerformed
+
+    private void deleteAsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAsigActionPerformed
+        // TODO add your handling code here:
+        funAsig.delete();
+    }//GEN-LAST:event_deleteAsigActionPerformed
+
     private static BufferedReader converterBuffer(File file){
         try{
             BufferedReader br = new BufferedReader(new FileReader(file,StandardCharsets.UTF_8));
@@ -571,7 +594,6 @@ public class MenuSuper extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem logout;
@@ -579,6 +601,7 @@ public class MenuSuper extends javax.swing.JFrame {
     private javax.swing.JMenuItem modCatedratico;
     private javax.swing.JMenuItem modCurso;
     private javax.swing.JMenuItem modEstudiante;
+    private javax.swing.JMenuItem modHorario;
     private javax.swing.JMenuItem modSalon;
     private javax.swing.JMenuItem modUser;
     private javax.swing.JMenuItem treeCatedraticos;

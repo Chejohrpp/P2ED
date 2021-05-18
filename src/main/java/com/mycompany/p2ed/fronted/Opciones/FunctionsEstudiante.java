@@ -49,7 +49,7 @@ public class FunctionsEstudiante {
     
     public void delete(){
         try{
-             String id= JOptionPane.showInputDialog("Ingrese el carnet del estudiante a modificar");
+             String id= JOptionPane.showInputDialog("Ingrese el carnet del estudiante a eliminar");
              boolean bol = almacenamiento.getHash().pop(Integer.parseInt(id));
              if (bol) {
                 JOptionPane.showMessageDialog(jframe,"Eliminacion exitosa");

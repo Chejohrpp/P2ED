@@ -38,14 +38,16 @@ public class FunctionsEdificio {
     public void Add(JFrame jframe){
         try{
              String id= JOptionPane.showInputDialog("Ingrese el nombre de un edificio a agregar");
-             Edificio edificio =  almacenamiento.getListEdificio().get(id);
-            if (edificio == null){
-                    edificio = new Edificio(id);
-                    almacenamiento.getListEdificio().push(id,edificio);
-                    JOptionPane.showMessageDialog(jframe,"Se agrego el edificio");
-            }else{
-                    JOptionPane.showMessageDialog(jframe,"Ya existe el edificio: " + id,"eror",JOptionPane.ERROR_MESSAGE); 
-            }
+             if (id != null) {
+                Edificio edificio =  almacenamiento.getListEdificio().get(id);
+                if (edificio == null){
+                        edificio = new Edificio(id);
+                        almacenamiento.getListEdificio().push(id,edificio);
+                        JOptionPane.showMessageDialog(jframe,"Se agrego el edificio");
+                }else{
+                        JOptionPane.showMessageDialog(jframe,"Ya existe el edificio: " + id,"eror",JOptionPane.ERROR_MESSAGE); 
+                }
+            }            
         }catch(Exception e){
             JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"eror",JOptionPane.ERROR_MESSAGE);            
         }

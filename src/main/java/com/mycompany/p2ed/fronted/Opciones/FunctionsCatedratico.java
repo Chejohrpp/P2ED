@@ -7,9 +7,7 @@ package com.mycompany.p2ed.fronted.Opciones;
 
 import com.mycompany.p2ed.Informacion.Almacenamiento;
 import com.mycompany.p2ed.fronted.FormCatedratico;
-import com.mycompany.p2ed.fronted.FormCurso;
 import com.mycompany.p2ed.objetos.Catedratico;
-import com.mycompany.p2ed.objetos.Curso;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 

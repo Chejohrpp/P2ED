@@ -138,7 +138,7 @@ public class CrearUser extends javax.swing.JFrame {
         cmbTipo = new javax.swing.JComboBox<>();
         lblTitle = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuario");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
