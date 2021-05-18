@@ -1,14 +1,15 @@
-digraph g{subgraph cluster_edificio{
-node [shape=box,color=black];
-edificio_T1->edificio_T5[constraint=false];
-edificio_T1[label="T1"];
-edificio_T5->edificio_t3[constraint=false];
-edificio_T5[label="T5"];
-edificio_t3->edificio_T1[constraint=false];
-edificio_t3[label="t3"];
-edificio_T1->edificio_t3[constraint=false];
-edificio_T5->edificio_T1[constraint=false];
-edificio_t3->edificio_T5[constraint=false];
-edificio_t3->salon_edificio_t3105;
-salon_edificio_t3105[label="105\n25 Estudiantes "];
+digraph g{subgraph cluster_arbol_Catedratico{
+rankdir=TB;
+node[shape = record, style=filled, fillcolor=white];
+Catedratico12445:C0->Catedratico12365;
+Catedratico12365:C0->Catedratico12345;
+Catedratico12345[label="12345\nProfesor 1\nCiudad333"];
+Catedratico12365[ label ="<C0>|12365\nProf5\nCiudad|<C1>"];
+Catedratico12445:C1->Catedratico47354;
+Catedratico47354:C0->Catedratico333333;
+Catedratico333333[label="333333\nlocho\nlochodddd"];
+Catedratico47354:C1->Catedratico47854;
+Catedratico47854[label="47854\nProf2\nCiudad"];
+Catedratico47354[ label ="<C0>|47354\nProf4\nCiudad|<C1>"];
+Catedratico12445[ label ="<C0>|12445\nProf3\nCiudad|<C1>"];
 } }

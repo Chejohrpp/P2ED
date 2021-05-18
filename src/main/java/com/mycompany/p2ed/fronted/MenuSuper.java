@@ -28,6 +28,9 @@ public class MenuSuper extends javax.swing.JFrame {
     private FunctionsEdificio funEdificio;
     private FunctionsUsers funUser;
     private FunctionsSalones funSalon;
+    private FunctionsCursos funCursos;
+    private FunctionsEstudiante funEst;
+    private FunctionsCatedratico funCat;
     /**
      * Creates new form MenuSuper
      * @param almacenamiento
@@ -38,6 +41,9 @@ public class MenuSuper extends javax.swing.JFrame {
         funEdificio = new FunctionsEdificio(almacenamiento);
         funUser = new FunctionsUsers(almacenamiento,this);
         funSalon = new FunctionsSalones(almacenamiento,this);
+        funCursos = new FunctionsCursos(almacenamiento,this);
+        funEst = new FunctionsEstudiante(almacenamiento,this);
+        funCat = new FunctionsCatedratico(almacenamiento,this);
     }
 
     /**
@@ -67,20 +73,20 @@ public class MenuSuper extends javax.swing.JFrame {
         modSalon = new javax.swing.JMenuItem();
         deleteSalon = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        addCurso = new javax.swing.JMenuItem();
+        modCurso = new javax.swing.JMenuItem();
+        deleteCurso = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
+        addEstudiante = new javax.swing.JMenuItem();
+        modEstudiante = new javax.swing.JMenuItem();
+        deleteEstudiante = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
+        addCatedratico = new javax.swing.JMenuItem();
+        modCatedratico = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
+        addAsign = new javax.swing.JMenuItem();
+        modAsig = new javax.swing.JMenuItem();
+        deleteAsig = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -205,70 +211,95 @@ public class MenuSuper extends javax.swing.JFrame {
 
         jMenu7.setText("Cursos");
 
-        jMenuItem10.setText("Crear");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        addCurso.setText("Crear");
+        addCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                addCursoActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem10);
+        jMenu7.add(addCurso);
 
-        jMenuItem11.setText("Modificar");
-        jMenu7.add(jMenuItem11);
+        modCurso.setText("Modificar");
+        modCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modCursoActionPerformed(evt);
+            }
+        });
+        jMenu7.add(modCurso);
 
-        jMenuItem12.setText("Eliminar");
-        jMenu7.add(jMenuItem12);
+        deleteCurso.setText("Eliminar");
+        deleteCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCursoActionPerformed(evt);
+            }
+        });
+        jMenu7.add(deleteCurso);
 
         jMenuBar1.add(jMenu7);
 
         jMenu8.setText("Estudiantes");
 
-        jMenuItem13.setText("Crear");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        addEstudiante.setText("Crear");
+        addEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                addEstudianteActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem13);
+        jMenu8.add(addEstudiante);
 
-        jMenuItem14.setText("Modificar");
-        jMenu8.add(jMenuItem14);
+        modEstudiante.setText("Modificar");
+        modEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modEstudianteActionPerformed(evt);
+            }
+        });
+        jMenu8.add(modEstudiante);
 
-        jMenuItem15.setText("Eliminar");
-        jMenu8.add(jMenuItem15);
+        deleteEstudiante.setText("Eliminar");
+        deleteEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteEstudianteActionPerformed(evt);
+            }
+        });
+        jMenu8.add(deleteEstudiante);
 
         jMenuBar1.add(jMenu8);
 
         jMenu9.setText("Catedraticos");
 
-        jMenuItem16.setText("Crear");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        addCatedratico.setText("Crear");
+        addCatedratico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                addCatedraticoActionPerformed(evt);
             }
         });
-        jMenu9.add(jMenuItem16);
+        jMenu9.add(addCatedratico);
 
-        jMenuItem17.setText("Modificar");
-        jMenu9.add(jMenuItem17);
+        modCatedratico.setText("Modificar");
+        modCatedratico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modCatedraticoActionPerformed(evt);
+            }
+        });
+        jMenu9.add(modCatedratico);
 
         jMenuBar1.add(jMenu9);
 
         jMenu10.setText("Asignacion");
 
-        jMenuItem19.setText("Crear");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+        addAsign.setText("Crear");
+        addAsign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
+                addAsignActionPerformed(evt);
             }
         });
-        jMenu10.add(jMenuItem19);
+        jMenu10.add(addAsign);
 
-        jMenuItem20.setText("Modificar");
-        jMenu10.add(jMenuItem20);
+        modAsig.setText("Modificar");
+        jMenu10.add(modAsig);
 
-        jMenuItem21.setText("Eliminar");
-        jMenu10.add(jMenuItem21);
+        deleteAsig.setText("Eliminar");
+        jMenu10.add(deleteAsig);
 
         jMenuBar1.add(jMenu10);
 
@@ -378,21 +409,24 @@ public class MenuSuper extends javax.swing.JFrame {
         funSalon.add();
     }//GEN-LAST:event_addSalonActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void addCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCursoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+        funCursos.add();
+    }//GEN-LAST:event_addCursoActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void addEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEstudianteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+        funEst.add();
+    }//GEN-LAST:event_addEstudianteActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+    private void addCatedraticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCatedraticoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
+        funCat.add();
+    }//GEN-LAST:event_addCatedraticoActionPerformed
 
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+    private void addAsignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAsignActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
+    }//GEN-LAST:event_addAsignActionPerformed
 
     private void verAsginacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verAsginacionesActionPerformed
         // TODO add your handling code here:
@@ -476,6 +510,31 @@ public class MenuSuper extends javax.swing.JFrame {
         funSalon.delete();
     }//GEN-LAST:event_deleteSalonActionPerformed
 
+    private void modCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modCursoActionPerformed
+        // TODO add your handling code here:
+        funCursos.mod();
+    }//GEN-LAST:event_modCursoActionPerformed
+
+    private void deleteCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCursoActionPerformed
+        // TODO add your handling code here:
+        funCursos.delete();
+    }//GEN-LAST:event_deleteCursoActionPerformed
+
+    private void modEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modEstudianteActionPerformed
+        // TODO add your handling code here:
+        funEst.mod();
+    }//GEN-LAST:event_modEstudianteActionPerformed
+
+    private void deleteEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEstudianteActionPerformed
+        // TODO add your handling code here:
+        funEst.delete();
+    }//GEN-LAST:event_deleteEstudianteActionPerformed
+
+    private void modCatedraticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modCatedraticoActionPerformed
+        // TODO add your handling code here:
+        funCat.mod();
+    }//GEN-LAST:event_modCatedraticoActionPerformed
+
     private static BufferedReader converterBuffer(File file){
         try{
             BufferedReader br = new BufferedReader(new FileReader(file,StandardCharsets.UTF_8));
@@ -487,12 +546,19 @@ public class MenuSuper extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem GraficarEdificiosSalones;
+    private javax.swing.JMenuItem addAsign;
+    private javax.swing.JMenuItem addCatedratico;
+    private javax.swing.JMenuItem addCurso;
     private javax.swing.JMenuItem addEdificio;
+    private javax.swing.JMenuItem addEstudiante;
     private javax.swing.JMenuItem addSalon;
     private javax.swing.JMenuItem addUser;
     private javax.swing.JMenuItem cargaDatos;
     private javax.swing.JMenu cargarDatos;
+    private javax.swing.JMenuItem deleteAsig;
+    private javax.swing.JMenuItem deleteCurso;
     private javax.swing.JMenuItem deleteEdificio;
+    private javax.swing.JMenuItem deleteEstudiante;
     private javax.swing.JMenuItem deleteSalon;
     private javax.swing.JMenuItem deleteUser;
     private javax.swing.JMenu jMenu1;
@@ -505,21 +571,14 @@ public class MenuSuper extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem logout;
+    private javax.swing.JMenuItem modAsig;
+    private javax.swing.JMenuItem modCatedratico;
+    private javax.swing.JMenuItem modCurso;
+    private javax.swing.JMenuItem modEstudiante;
     private javax.swing.JMenuItem modSalon;
     private javax.swing.JMenuItem modUser;
     private javax.swing.JMenuItem treeCatedraticos;

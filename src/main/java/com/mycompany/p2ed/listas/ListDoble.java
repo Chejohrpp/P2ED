@@ -123,6 +123,7 @@ public class ListDoble<T> {
     }
     
     public String getEstado(String nombre, String idHorario){
+        flecha = "";
         if (root == null) {
             return "";
         }

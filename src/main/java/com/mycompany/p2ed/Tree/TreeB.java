@@ -420,6 +420,7 @@ public class TreeB<T> {
     
     public String getEstadoTodo(String nombre){
         flechas = "";
+        subGrahp = "";
         String estado = "subgraph cluster_arbol_"+nombre+"{\nrankdir=TB;\n"
                 + "node[shape = record, style=filled, fillcolor=white];\n";
         iteracion = 0;

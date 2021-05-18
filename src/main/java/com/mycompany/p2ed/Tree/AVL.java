@@ -142,14 +142,15 @@ public class AVL<T> {
         }
         return current;
     }
-    public void Modificar(String id, T obj){
+    public boolean Modificar(String id, T obj){
         NodeAVL<T> node = find(id);
         if (node != null) {
             raiz = delete(raiz,id);
             raiz = insert(raiz,id,obj);
-            System.out.println(id +" modificado con exito");
+            //System.out.println(id +" modificado con exito");
+            return true;
         }else{
-            System.out.println("No esta el usuario a modificar");
+            return false;
         }
     }
     
