@@ -6,8 +6,10 @@
 package com.mycompany.p2ed.fronted.Opciones;
 
 import com.mycompany.p2ed.Informacion.Almacenamiento;
+import com.mycompany.p2ed.fronted.FormCurso;
 import com.mycompany.p2ed.fronted.FormEstudiante;
-import com.mycompany.p2ed.fronted.Reportes.CursoEstudiante;
+import com.mycompany.p2ed.fronted.Reportes.*;
+import com.mycompany.p2ed.objetos.Curso;
 import com.mycompany.p2ed.objetos.Estudiante;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -39,6 +41,22 @@ public class FunctionsReportes {
         }catch(Exception e){
             JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"error",JOptionPane.ERROR_MESSAGE);          
         
+        }
+    }
+    
+    public void EstudianteCurso(){
+         try{
+             String id= JOptionPane.showInputDialog("Ingrese el codigo del Curso");
+             Curso bol = almacenamiento.getListCurso().get(id);
+             if (bol != null) {
+                EstudianteCurso form = new EstudianteCurso(almacenamiento,Integer.valueOf(id));
+                form.setLocationRelativeTo(null);
+                form.setVisible(true);
+            }else{
+                 JOptionPane.showMessageDialog(jframe,"No se encontro el Curso: " + id,"error",JOptionPane.ERROR_MESSAGE); 
+             }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"error",JOptionPane.ERROR_MESSAGE);          
         }
     }
     

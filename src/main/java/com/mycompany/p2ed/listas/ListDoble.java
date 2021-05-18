@@ -6,9 +6,11 @@
 package com.mycompany.p2ed.listas;
 
 import com.mycompany.p2ed.Nodos.NodeD;
+import com.mycompany.p2ed.Tree.AVL;
 import com.mycompany.p2ed.objetos.Asignar;
 import com.mycompany.p2ed.objetos.Salon;
 import java.lang.reflect.Field;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -45,6 +47,22 @@ public class ListDoble<T> {
             aux = aux.getSig();
         }
         return null;
+    }
+    
+    public void getEstudianteCurso(int codigo,DefaultTableModel dfm, AVL<String> listEst){
+        NodeD<T> aux = root;
+        while(aux != null){
+            Asignar asignacion = (Asignar) aux.getData();
+            String i = listEst.get(String.valueOf(aux.getCarnet()));
+            if (i == null) {
+                if (asignacion.getEstudiante() != null) {
+                    String data[] = {String.valueOf(codigo),String.valueOf(aux.getCarnet()),asignacion.getEstudiante().getNombre()};
+                    listEst.add(String.valueOf(aux.getCarnet()), String.valueOf(aux.getCarnet()));
+                    dfm.addRow(data);
+                }               
+            }
+            aux = aux.getSig();
+        }
     }
     
     public boolean modificar(int carnet, int codHorario, T data){

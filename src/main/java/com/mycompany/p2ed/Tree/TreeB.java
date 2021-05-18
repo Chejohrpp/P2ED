@@ -206,6 +206,27 @@ public class TreeB<T> {
       }
     }
   }
+  
+  public void getEstudianteCurso(int codigo,DefaultTableModel dfm){
+      AVL<String> listEstudiantes = new AVL();
+      getSubEstianteCurso(root,codigo,dfm,listEstudiantes);
+  }
+  
+  private void getSubEstianteCurso(Node x, int codigo,DefaultTableModel dfm, AVL<String> listEst){
+      assert (x == null);
+    for (int i = 0; i < x.n; i++) {
+      Horario horario = (Horario) x.key[i].data;
+      Curso curso = (Curso) horario.getCurso().getData();
+        if (curso.getCodigo() == codigo) {
+            horario.getAsignaciones().getEstudianteCurso(codigo, dfm, listEst);
+        }
+    }
+    if (!x.leaf) {
+      for (int i = 0; i < x.n + 1; i++) {
+        getSubEstianteCurso(x.child[i],codigo,dfm,listEst);
+      }
+    }
+  }
 
   // Check if present
   public boolean Contain(int k) {
