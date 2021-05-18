@@ -8,8 +8,6 @@ package com.mycompany.p2ed.listas;
 import com.mycompany.p2ed.Nodos.NodeD;
 import com.mycompany.p2ed.Tree.AVL;
 import com.mycompany.p2ed.objetos.Asignar;
-import com.mycompany.p2ed.objetos.Salon;
-import java.lang.reflect.Field;
 import javax.swing.table.DefaultTableModel;
 
 /**

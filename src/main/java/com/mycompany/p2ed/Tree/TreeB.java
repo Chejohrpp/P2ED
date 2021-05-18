@@ -6,8 +6,10 @@
 package com.mycompany.p2ed.Tree;
 
 import com.mycompany.p2ed.listas.ListSimple;
+import com.mycompany.p2ed.objetos.Asignar;
 import com.mycompany.p2ed.objetos.Curso;
 import com.mycompany.p2ed.objetos.Edificio;
+import com.mycompany.p2ed.objetos.Estudiante;
 import com.mycompany.p2ed.objetos.Horario;
 import com.mycompany.p2ed.objetos.Salon;
 import java.util.Stack;
@@ -203,6 +205,37 @@ public class TreeB<T> {
     if (!x.leaf) {
       for (int i = 0; i < x.n + 1; i++) {
         getSubCursoEstudiante(x.child[i],carnet,dfm,listCursos);
+      }
+    }
+  }
+  
+  public void getNotasEstudiante(int carnet,DefaultTableModel dfm){
+      getSubNotasEstudiante(root,carnet,dfm);
+  }
+  
+  private void getSubNotasEstudiante(Node x, int carnet,DefaultTableModel dfm){
+      assert (x == null);
+    for (int i = 0; i < x.n; i++) {
+      Horario horario = (Horario) x.key[i].data;
+      Asignar asig = horario.getAsignaciones().get(carnet, horario.getId());
+        if (asig != null) {
+            Curso curso = (Curso) horario.getCurso().getData();
+            Estudiante estu = asig.getEstudiante();
+            int total = asig.getZona()+asig.getEx_final();
+            String estado = "";
+            if (total >= 61) {
+                estado = "Aprobado";
+            }else{
+                estado = "Reprobado";
+            }
+            String[] data = {curso.getNombre(),String.valueOf(curso.getSemestre()),String.valueOf(horario.getId()),
+            String.valueOf(asig.getZona()), String.valueOf(asig.getEx_final()),String.valueOf(total),estado};
+            dfm.addRow(data);            
+        }      
+    }
+    if (!x.leaf) {
+      for (int i = 0; i < x.n + 1; i++) {
+        getSubNotasEstudiante(x.child[i],carnet,dfm);
       }
     }
   }

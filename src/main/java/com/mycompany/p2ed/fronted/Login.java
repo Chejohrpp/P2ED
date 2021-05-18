@@ -124,12 +124,12 @@ public class Login extends javax.swing.JFrame {
             if (user != null) {
                 if (user.getPassword().equals(pass)) {
                     if (user.getTipo().equalsIgnoreCase("estudiante")) {
-                        MenuEstudiante menuE = new MenuEstudiante(almacenamiento,Integer.parseInt(userName));
+                        MenuEstudiante menuE = new MenuEstudiante(almacenamiento,Integer.parseInt(userName),user.getNombre());
                         menuE.setLocationRelativeTo(null);
                         menuE.setVisible(true);
                         this.setVisible(false);
                     }else{
-                        MenuColaborador menuC = new MenuColaborador(almacenamiento);
+                        MenuColaborador menuC = new MenuColaborador(almacenamiento,user.getId(),user.getNombre());
                         menuC.setLocationRelativeTo(null);
                         menuC.setVisible(true);
                         this.setVisible(false);

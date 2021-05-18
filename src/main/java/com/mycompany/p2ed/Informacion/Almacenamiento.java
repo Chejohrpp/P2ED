@@ -52,7 +52,7 @@ public class Almacenamiento {
             BufferedReader bufer = new BufferedReader(new FileReader("C:\\Users\\sergi\\OneDrive\\Documentos\\Datos.txt",StandardCharsets.UTF_8));
             try{
                 //LexerDatos lexico = new LexerDatos(reader);
-                LexerDatos lexico = new LexerDatos(bufer);
+                LexerDatos lexico = new LexerDatos(texto);
                 ParserDatos parse = new ParserDatos(lexico);          
                 
                 try {
