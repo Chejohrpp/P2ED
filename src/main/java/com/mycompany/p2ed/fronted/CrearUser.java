@@ -36,6 +36,7 @@ public class CrearUser extends javax.swing.JFrame {
         txName.setText(user.getNombre());
         txtPass.setText(user.getPassword());
         cmbTipo.setSelectedItem(user.getTipo());
+        cmbTipo.setEnabled(false);
         lblTitle.setText("Modificar Usuario");
     }
     

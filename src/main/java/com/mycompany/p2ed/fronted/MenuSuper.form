@@ -316,6 +316,33 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Reportes"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="cursoEstudiante">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cursos por estudiante"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="EstudianteCurso">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Estudiantes por curso"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="CursoSalon">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cursos por Salon"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="NotasSemestre">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Notas de Estudiantes por semestre"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>

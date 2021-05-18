@@ -14,12 +14,14 @@ import com.mycompany.p2ed.Informacion.Almacenamiento;
 public class MenuEstudiante extends javax.swing.JFrame {
     
     private Almacenamiento almacenamiento;
+    private int carnet;
     /**
      * Creates new form MenuEstudiante
      */
-    public MenuEstudiante(Almacenamiento almacenamiento) {
+    public MenuEstudiante(Almacenamiento almacenamiento, int carnet) {
         initComponents();
         this.almacenamiento = almacenamiento;
+        this.carnet = carnet;
     }
 
     /**

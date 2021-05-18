@@ -102,6 +102,11 @@ public class MenuSuper extends javax.swing.JFrame {
         verHorario = new javax.swing.JMenuItem();
         verEstudiantes = new javax.swing.JMenuItem();
         verTodo = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        cursoEstudiante = new javax.swing.JMenuItem();
+        EstudianteCurso = new javax.swing.JMenuItem();
+        CursoSalon = new javax.swing.JMenuItem();
+        NotasSemestre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -397,6 +402,22 @@ public class MenuSuper extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Reportes");
+
+        cursoEstudiante.setText("Cursos por estudiante");
+        jMenu3.add(cursoEstudiante);
+
+        EstudianteCurso.setText("Estudiantes por curso");
+        jMenu3.add(EstudianteCurso);
+
+        CursoSalon.setText("Cursos por Salon");
+        jMenu3.add(CursoSalon);
+
+        NotasSemestre.setText("Notas de Estudiantes por semestre");
+        jMenu3.add(NotasSemestre);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -580,7 +601,10 @@ public class MenuSuper extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CursoSalon;
+    private javax.swing.JMenuItem EstudianteCurso;
     private javax.swing.JMenuItem GraficarEdificiosSalones;
+    private javax.swing.JMenuItem NotasSemestre;
     private javax.swing.JMenuItem addAsign;
     private javax.swing.JMenuItem addCatedratico;
     private javax.swing.JMenuItem addCurso;
@@ -590,6 +614,7 @@ public class MenuSuper extends javax.swing.JFrame {
     private javax.swing.JMenuItem addUser;
     private javax.swing.JMenuItem cargaDatos;
     private javax.swing.JMenu cargarDatos;
+    private javax.swing.JMenuItem cursoEstudiante;
     private javax.swing.JMenuItem deleteAsig;
     private javax.swing.JMenuItem deleteCurso;
     private javax.swing.JMenuItem deleteEdificio;
@@ -600,6 +625,7 @@ public class MenuSuper extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
