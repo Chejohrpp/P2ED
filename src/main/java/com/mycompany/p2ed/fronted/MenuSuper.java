@@ -10,6 +10,7 @@ import com.mycompany.p2ed.Dibujar;
 import com.mycompany.p2ed.Informacion.Almacenamiento;
 import com.mycompany.p2ed.Nodos.NodeCD;
 import com.mycompany.p2ed.fronted.Opciones.*;
+import com.mycompany.p2ed.fronted.Reportes.CursoEstudiante;
 import com.mycompany.p2ed.objetos.Usuario;
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,6 +34,7 @@ public class MenuSuper extends javax.swing.JFrame {
     private FunctionsCatedratico funCat;
     private FunctionsAsignacion funAsig;
     private FunctionsHorario funHor;
+    private FunctionsReportes funReport;
     /**
      * Creates new form MenuSuper
      * @param almacenamiento
@@ -48,6 +50,7 @@ public class MenuSuper extends javax.swing.JFrame {
         funCat = new FunctionsCatedratico(almacenamiento,this);
         funAsig = new FunctionsAsignacion(almacenamiento,this);
         funHor = new FunctionsHorario(almacenamiento,this);
+        funReport = new FunctionsReportes(almacenamiento,this);
     }
 
     /**
@@ -405,6 +408,11 @@ public class MenuSuper extends javax.swing.JFrame {
         jMenu3.setText("Reportes");
 
         cursoEstudiante.setText("Cursos por estudiante");
+        cursoEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cursoEstudianteActionPerformed(evt);
+            }
+        });
         jMenu3.add(cursoEstudiante);
 
         EstudianteCurso.setText("Estudiantes por curso");
@@ -590,6 +598,11 @@ public class MenuSuper extends javax.swing.JFrame {
         // TODO add your handling code here:
         funHor.mod();
     }//GEN-LAST:event_modHorarioActionPerformed
+
+    private void cursoEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cursoEstudianteActionPerformed
+        // TODO add your handling code here:
+        funReport.CursoEstudiante();
+    }//GEN-LAST:event_cursoEstudianteActionPerformed
 
     private static BufferedReader converterBuffer(File file){
         try{

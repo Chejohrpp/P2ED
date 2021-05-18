@@ -5,11 +5,13 @@
  */
 package com.mycompany.p2ed.Tree;
 
+import com.mycompany.p2ed.listas.ListSimple;
 import com.mycompany.p2ed.objetos.Curso;
 import com.mycompany.p2ed.objetos.Edificio;
 import com.mycompany.p2ed.objetos.Horario;
 import com.mycompany.p2ed.objetos.Salon;
 import java.util.Stack;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -174,6 +176,33 @@ public class TreeB<T> {
     if (!x.leaf) {
       for (int i = 0; i < x.n + 1; i++) {
         Show(x.child[i]);
+      }
+    }
+  }
+  
+  public void getCursoEstudiante(int carnet,DefaultTableModel dfm){
+      AVL<String> listCursos = new AVL();
+      getSubCursoEstudiante(root,carnet,dfm,listCursos);
+  }
+  
+  private void getSubCursoEstudiante(Node x, int carnet,DefaultTableModel dfm, AVL<String> listCursos){
+      assert (x == null);
+    for (int i = 0; i < x.n; i++) {
+      Horario horario = (Horario) x.key[i].data;
+        if (horario.getAsignaciones().get(carnet, horario.getId()) != null) {
+            Curso curso = (Curso) horario.getCurso().getData();
+            String cur = listCursos.get(curso.getNombre());
+            if (cur == null) {
+                String[] data = {String.valueOf(carnet),curso.getNombre()};
+                dfm.addRow(data);
+                listCursos.add(curso.getNombre(), curso.getNombre());
+            }
+            
+        }      
+    }
+    if (!x.leaf) {
+      for (int i = 0; i < x.n + 1; i++) {
+        getSubCursoEstudiante(x.child[i],carnet,dfm,listCursos);
       }
     }
   }
@@ -467,7 +496,7 @@ public class TreeB<T> {
                 flechas +=  actual+":T"+i +" -> curso_"+ curso.getCodigo()+"[color=brown4];\n";
             }
             if (horario.getAsignaciones() !=  null) {                    
-                subGrahp += horario.getAsignaciones().getEstado("Asignaciones", actual);
+                subGrahp += horario.getAsignaciones().getEstado("Asignaciones", actual,i);
                 flechas += horario.getAsignaciones().getFlecha();
             } 
             

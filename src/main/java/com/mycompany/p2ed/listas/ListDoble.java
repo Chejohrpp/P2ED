@@ -122,7 +122,7 @@ public class ListDoble<T> {
         return estado + "}";
     }
     
-    public String getEstado(String nombre, String idHorario){
+    public String getEstado(String nombre, String idHorario, int i){
         flecha = "";
         if (root == null) {
             return "";
@@ -138,7 +138,7 @@ public class ListDoble<T> {
                     //System.out.println(asig.getEstudiante());
                     if (aux == root)
                     {                    
-                        flecha += idHorario + " -> "+ actual + " [arrowhead=onormal, arrowtail=dot, dir=both,color=red,arrowsize=0.9];\n";
+                        flecha += idHorario+":T"+i + " -> "+ actual + " [arrowhead=onormal, arrowtail=dot, dir=both,color=red,arrowsize=0.9];\n";
                         if (last!=root)
                         {
                             String sig = idHorario+nombre+ aux.getSig().getCarnet();
