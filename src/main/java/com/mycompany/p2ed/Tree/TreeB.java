@@ -167,7 +167,7 @@ public class TreeB<T> {
     Show(root);
   }
 
-  // Display
+  // Mostar todo el arbol por consola
   private void Show(Node x) {
     assert (x == null);
     for (int i = 0; i < x.n; i++) {
@@ -254,8 +254,27 @@ public class TreeB<T> {
       }
     }
   }
+  
+  public void getNotaSemestre(int semestre,DefaultTableModel dfm){
+      getSubNotaSemestre(root,semestre,dfm);
+  }
+  private void getSubNotaSemestre(Node x, int semestre, DefaultTableModel dfm){
+      assert (x == null);
+    for (int i = 0; i < x.n; i++) {
+      Horario horario = (Horario) x.key[i].data;
+      Curso curso = (Curso) horario.getCurso().getData();
+        if (curso.getSemestre() == semestre) {
+            horario.getAsignaciones().getNotaSemestre(curso.getNombre(), dfm);
+        }
+    }
+    if (!x.leaf) {
+      for (int i = 0; i < x.n + 1; i++) {
+        getSubNotaSemestre(x.child[i],semestre,dfm);
+      }
+    }
+  }
 
-  // Check if present
+  // revisar si esta presente
   public boolean Contain(int k) {
     if (this.Search(root, k) != null) {
       return true;

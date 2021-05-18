@@ -84,4 +84,15 @@ public class FunctionsReportes {
         }
     }
     
+    public void NotaSemestre(){
+        try{
+            String semestre = JOptionPane.showInputDialog("Ingrese el Semestre");
+            NotaSemestre nota = new NotaSemestre(almacenamiento,Integer.parseInt(semestre));
+            nota.setLocationRelativeTo(null);
+            nota.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(jframe,"Ocurrio un error " + e.getMessage(),"error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }

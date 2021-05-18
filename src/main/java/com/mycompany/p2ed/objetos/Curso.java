@@ -57,7 +57,7 @@ public class Curso {
 
     @Override
     public String toString() {
-        return codigo + "\\n" + nombre + "\\n" + semestre + "\\n" + creditos;
+        return codigo + "\\n" + nombre + "\\nSemestre: " + semestre + "\\nCreditos: " + creditos;
     }
     
     

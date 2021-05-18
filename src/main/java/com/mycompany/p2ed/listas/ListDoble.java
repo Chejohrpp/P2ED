@@ -65,6 +65,24 @@ public class ListDoble<T> {
         }
     }
     
+    public void getNotaSemestre(String curso,DefaultTableModel dfm){
+        NodeD<T> aux = root;
+        while(aux != null){
+            Asignar asignacion = (Asignar) aux.getData();           
+            int total = asignacion.getZona()+asignacion.getEx_final();
+            String estado = "";
+            if (total >= 61) {
+                estado = "Aprobado";
+            }else{
+                estado = "Reprobado";
+            }            
+            String[] data = {curso,String.valueOf(asignacion.getHorario().getId()),asignacion.getEstudiante().getNombre(),String.valueOf(asignacion.getZona()),
+                String.valueOf(asignacion.getEx_final()),String.valueOf(total),estado};
+            dfm.addRow(data);
+            aux = aux.getSig();
+        }
+    }
+    
     public boolean modificar(int carnet, int codHorario, T data){
         NodeD<T> aux = root;
         while(aux != null){

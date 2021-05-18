@@ -432,6 +432,11 @@ public class MenuSuper extends javax.swing.JFrame {
         jMenu3.add(CursoSalon);
 
         NotasSemestre.setText("Notas de Estudiantes por semestre");
+        NotasSemestre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NotasSemestreActionPerformed(evt);
+            }
+        });
         jMenu3.add(NotasSemestre);
 
         jMenuBar1.add(jMenu3);
@@ -623,6 +628,11 @@ public class MenuSuper extends javax.swing.JFrame {
         // TODO add your handling code here:
         funReport.CursoSalon();
     }//GEN-LAST:event_CursoSalonActionPerformed
+
+    private void NotasSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotasSemestreActionPerformed
+        // TODO add your handling code here:
+        funReport.NotaSemestre();
+    }//GEN-LAST:event_NotasSemestreActionPerformed
 
     private static BufferedReader converterBuffer(File file){
         try{
